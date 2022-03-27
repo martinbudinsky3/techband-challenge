@@ -1,6 +1,6 @@
-import '../bootstrap'
+import './bootstrap'
 import router from './router'
-import Admin from './App.vue'
+import Admin from './Admin.vue'
 
 
 const admin = new Vue({
