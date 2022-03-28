@@ -3,35 +3,27 @@
         <div>
 
             <parameter-dialog-form @parameterCreated="onParameterCreated"></parameter-dialog-form>
-            <v-simple-table>
-                <template v-slot:default>
-                    <thead>
-                    <tr>
-                        <th class="text-left">
-                            Parameter
-                        </th>
-                        <th class="text-left">
-                            Koeficient
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr
-                        v-for="item in parameters"
-                        :key="item.name">
-                        <td>{{ item.name }}</td>
-                        <td>{{ item.coefficient }}</td>
-                    </tr>
-                    </tbody>
-                </template>
-            </v-simple-table>
+            <v-data-table
+                :headers="headers"
+                :items="parameters"
+                :hide-default-footer="true"
+                class="elevation-1"
+            >
+<!--                <template v-slot:item="{ item }">-->
+<!--                    <tr>-->
+<!--                        <td class="custom-class">{{ item.name }}</td>-->
+<!--                        <td class="custom-class">{{ item.age }}</td>-->
+<!--                        <td class="custom-class">{{ item.country }}</td>-->
+<!--                    </tr>-->
+<!--                </template>-->
+            </v-data-table>
         </div>
     </v-app>
 </template>
 
 <script>
 import {
-    VSimpleTable,
+    VDataTable,
     VBtn,
     VApp
 } from 'vuetify/lib'
@@ -40,27 +32,53 @@ import ParameterDialogForm from "./components/ParameterDialogForm";
 export default {
     components: {
         ParameterDialogForm,
-        VSimpleTable,
+        VDataTable,
         VBtn,
         VApp,
     },
     data() {
         return {
             dialog: false,
-            name: '',
-            coefficient: 0,
+
             parameters: [
                 {
-                    name: 'parameter 1',
+                    id: 1,
+                    parameter: 'parameter 1',
                     coefficient: 0.5,
                 },
                 {
-                    name: 'parameter 2',
+                    id: 2,
+                    parameter: 'parameter 2',
                     coefficient: 0.8,
                 },
                 {
-                    name: 'parameter 3',
+                    id: 3,
+                    parameter: 'parameter 3',
                     coefficient: 0.2,
+                },
+            ],
+            hardHeaders: [
+                {
+                    text: "Parameter",
+                    value: "parameter",
+                },
+                {
+                    text: "Coefficient",
+                    value: "coefficient",
+                }
+            ],
+            companies: [
+                {
+                    text: 'company 1',
+                    value: '1',
+                },
+                {
+                    text: 'company 2',
+                    value: '2',
+                },
+                {
+                    text: 'company 3',
+                    value: '3',
                 },
             ],
         }
@@ -68,6 +86,12 @@ export default {
     methods: {
         onParameterCreated(parameter) {
             this.parameters.push(parameter)
+        }
+    },
+    computed: {
+        headers: function () {
+            // `this` points to the vm instance
+            return this.hardHeaders.concat(this.companies)
         }
     }
 }

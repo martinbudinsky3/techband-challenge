@@ -87,7 +87,7 @@ export default {
     methods: {
         addParameter(event) {
             this.dialog = false
-            this.$emit('parameterCreated', {name: this.name, coefficient: this.coefficient})
+            this.$emit('parameterCreated', {id: 4, parameter: this.name, coefficient: this.coefficient})
 
             this.name = ''
             this.coefficient = 0
