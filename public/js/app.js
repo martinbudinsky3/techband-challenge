@@ -2065,14 +2065,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vuetify_lib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuetify/lib */ "./node_modules/vuetify/lib/components/VDataTable/VSimpleTable.js");
-/* harmony import */ var vuetify_lib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuetify/lib */ "./node_modules/vuetify/lib/components/VBtn/VBtn.js");
-/* harmony import */ var vuetify_lib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuetify/lib */ "./node_modules/vuetify/lib/components/VApp/VApp.js");
-/* harmony import */ var vuetify_lib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuetify/lib */ "./node_modules/vuetify/lib/components/VDialog/VDialog.js");
-/* harmony import */ var vuetify_lib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuetify/lib */ "./node_modules/vuetify/lib/components/VCard/VCard.js");
-/* harmony import */ var vuetify_lib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuetify/lib */ "./node_modules/vuetify/lib/components/VCard/index.js");
-/* harmony import */ var vuetify_lib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vuetify/lib */ "./node_modules/vuetify/lib/components/VGrid/VSpacer.js");
-/* harmony import */ var vuetify_lib__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vuetify/lib */ "./node_modules/vuetify/lib/components/VTextField/VTextField.js");
+/* harmony import */ var vuetify_lib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuetify/lib */ "./node_modules/vuetify/lib/components/VDataTable/VSimpleTable.js");
+/* harmony import */ var vuetify_lib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuetify/lib */ "./node_modules/vuetify/lib/components/VBtn/VBtn.js");
+/* harmony import */ var vuetify_lib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuetify/lib */ "./node_modules/vuetify/lib/components/VApp/VApp.js");
+/* harmony import */ var _components_ParameterDialogForm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/ParameterDialogForm */ "./resources/js/app/components/ParameterDialogForm.vue");
 //
 //
 //
@@ -2098,6 +2094,64 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  components: {
+    ParameterDialogForm: _components_ParameterDialogForm__WEBPACK_IMPORTED_MODULE_0__["default"],
+    VSimpleTable: vuetify_lib__WEBPACK_IMPORTED_MODULE_1__["default"],
+    VBtn: vuetify_lib__WEBPACK_IMPORTED_MODULE_2__["default"],
+    VApp: vuetify_lib__WEBPACK_IMPORTED_MODULE_3__["default"]
+  },
+  data: function data() {
+    return {
+      dialog: false,
+      name: '',
+      coefficient: 0,
+      parameters: [{
+        name: 'parameter 1',
+        coefficient: 0.5
+      }, {
+        name: 'parameter 2',
+        coefficient: 0.8
+      }, {
+        name: 'parameter 3',
+        coefficient: 0.2
+      }]
+    };
+  },
+  methods: {
+    onParameterCreated: function onParameterCreated(parameter) {
+      this.parameters.push(parameter);
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/app/components/ParameterDialogForm.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/app/components/ParameterDialogForm.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vuetify_lib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuetify/lib */ "./node_modules/vuetify/lib/components/VBtn/VBtn.js");
+/* harmony import */ var vuetify_lib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuetify/lib */ "./node_modules/vuetify/lib/components/VDialog/VDialog.js");
+/* harmony import */ var vuetify_lib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuetify/lib */ "./node_modules/vuetify/lib/components/VCard/VCard.js");
+/* harmony import */ var vuetify_lib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuetify/lib */ "./node_modules/vuetify/lib/components/VCard/index.js");
+/* harmony import */ var vuetify_lib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuetify/lib */ "./node_modules/vuetify/lib/components/VGrid/VSpacer.js");
+/* harmony import */ var vuetify_lib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuetify/lib */ "./node_modules/vuetify/lib/components/VTextField/VTextField.js");
 //
 //
 //
@@ -2157,39 +2211,31 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    VSimpleTable: vuetify_lib__WEBPACK_IMPORTED_MODULE_0__["default"],
-    VBtn: vuetify_lib__WEBPACK_IMPORTED_MODULE_1__["default"],
-    VApp: vuetify_lib__WEBPACK_IMPORTED_MODULE_2__["default"],
-    VDialog: vuetify_lib__WEBPACK_IMPORTED_MODULE_3__["default"],
-    VCard: vuetify_lib__WEBPACK_IMPORTED_MODULE_4__["default"],
-    VCardActions: vuetify_lib__WEBPACK_IMPORTED_MODULE_5__.VCardActions,
-    VCardText: vuetify_lib__WEBPACK_IMPORTED_MODULE_5__.VCardText,
-    VCardTitle: vuetify_lib__WEBPACK_IMPORTED_MODULE_5__.VCardTitle,
-    VSpacer: vuetify_lib__WEBPACK_IMPORTED_MODULE_6__["default"],
-    VTextField: vuetify_lib__WEBPACK_IMPORTED_MODULE_7__["default"]
+    VBtn: vuetify_lib__WEBPACK_IMPORTED_MODULE_0__["default"],
+    VDialog: vuetify_lib__WEBPACK_IMPORTED_MODULE_1__["default"],
+    VCard: vuetify_lib__WEBPACK_IMPORTED_MODULE_2__["default"],
+    VCardActions: vuetify_lib__WEBPACK_IMPORTED_MODULE_3__.VCardActions,
+    VCardText: vuetify_lib__WEBPACK_IMPORTED_MODULE_3__.VCardText,
+    VCardTitle: vuetify_lib__WEBPACK_IMPORTED_MODULE_3__.VCardTitle,
+    VSpacer: vuetify_lib__WEBPACK_IMPORTED_MODULE_4__["default"],
+    VTextField: vuetify_lib__WEBPACK_IMPORTED_MODULE_5__["default"]
   },
   data: function data() {
     return {
       dialog: false,
-      parameters: [{
-        name: 'parameter 1',
-        coefficient: 0.5
-      }, {
-        name: 'parameter 2',
-        coefficient: 0.8
-      }, {
-        name: 'parameter 3',
-        coefficient: 0.2
-      }]
+      name: '',
+      coefficient: 0
     };
   },
   methods: {
     addParameter: function addParameter(event) {
       this.dialog = false;
-      this.parameters.push({
-        name: 'Test',
-        coefficient: 1
+      this.$emit('parameterCreated', {
+        name: this.name,
+        coefficient: this.coefficient
       });
+      this.name = '';
+      this.coefficient = 0;
     }
   }
 });
@@ -3924,6 +3970,45 @@ component.options.__file = "resources/js/app/App.vue"
 
 /***/ }),
 
+/***/ "./resources/js/app/components/ParameterDialogForm.vue":
+/*!*************************************************************!*\
+  !*** ./resources/js/app/components/ParameterDialogForm.vue ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _ParameterDialogForm_vue_vue_type_template_id_35ac01c8_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ParameterDialogForm.vue?vue&type=template&id=35ac01c8&scoped=true& */ "./resources/js/app/components/ParameterDialogForm.vue?vue&type=template&id=35ac01c8&scoped=true&");
+/* harmony import */ var _ParameterDialogForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ParameterDialogForm.vue?vue&type=script&lang=js& */ "./resources/js/app/components/ParameterDialogForm.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ParameterDialogForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ParameterDialogForm_vue_vue_type_template_id_35ac01c8_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _ParameterDialogForm_vue_vue_type_template_id_35ac01c8_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "35ac01c8",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/app/components/ParameterDialogForm.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/app/App.vue?vue&type=script&lang=js&":
 /*!***********************************************************!*\
   !*** ./resources/js/app/App.vue?vue&type=script&lang=js& ***!
@@ -3940,6 +4025,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/app/components/ParameterDialogForm.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/app/components/ParameterDialogForm.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ParameterDialogForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ParameterDialogForm.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/app/components/ParameterDialogForm.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ParameterDialogForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/app/App.vue?vue&type=template&id=245d94f6&":
 /*!*****************************************************************!*\
   !*** ./resources/js/app/App.vue?vue&type=template&id=245d94f6& ***!
@@ -3953,6 +4054,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_template_id_245d94f6___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_template_id_245d94f6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./App.vue?vue&type=template&id=245d94f6& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/app/App.vue?vue&type=template&id=245d94f6&");
+
+
+/***/ }),
+
+/***/ "./resources/js/app/components/ParameterDialogForm.vue?vue&type=template&id=35ac01c8&scoped=true&":
+/*!********************************************************************************************************!*\
+  !*** ./resources/js/app/components/ParameterDialogForm.vue?vue&type=template&id=35ac01c8&scoped=true& ***!
+  \********************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ParameterDialogForm_vue_vue_type_template_id_35ac01c8_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ParameterDialogForm_vue_vue_type_template_id_35ac01c8_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ParameterDialogForm_vue_vue_type_template_id_35ac01c8_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ParameterDialogForm.vue?vue&type=template&id=35ac01c8&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/app/components/ParameterDialogForm.vue?vue&type=template&id=35ac01c8&scoped=true&");
 
 
 /***/ }),
@@ -3977,121 +4095,9 @@ var render = function () {
     _c(
       "div",
       [
-        _c(
-          "v-dialog",
-          {
-            attrs: { "max-width": "600px" },
-            scopedSlots: _vm._u([
-              {
-                key: "activator",
-                fn: function (ref) {
-                  var on = ref.on
-                  var attrs = ref.attrs
-                  return [
-                    _c(
-                      "v-btn",
-                      _vm._g(
-                        _vm._b(
-                          { attrs: { color: "primary", dark: "" } },
-                          "v-btn",
-                          attrs,
-                          false
-                        ),
-                        on
-                      ),
-                      [
-                        _vm._v(
-                          "\n                    Pridať parameter\n                "
-                        ),
-                      ]
-                    ),
-                  ]
-                },
-              },
-            ]),
-            model: {
-              value: _vm.dialog,
-              callback: function ($$v) {
-                _vm.dialog = $$v
-              },
-              expression: "dialog",
-            },
-          },
-          [
-            _vm._v(" "),
-            _c(
-              "v-card",
-              [
-                _c("v-card-title", [
-                  _c("span", { staticClass: "text-h5" }, [
-                    _vm._v("Nový parameter"),
-                  ]),
-                ]),
-                _vm._v(" "),
-                _c(
-                  "v-card-text",
-                  [
-                    _c("v-text-field", {
-                      attrs: { label: "Názov *", required: "" },
-                    }),
-                    _vm._v(" "),
-                    _c("v-text-field", {
-                      attrs: {
-                        label: "Koeficient *",
-                        type: "number",
-                        step: "0.1",
-                        required: "",
-                      },
-                    }),
-                    _vm._v(" "),
-                    _c("small", [_vm._v("*indicates required field")]),
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "v-card-actions",
-                  [
-                    _c("v-spacer"),
-                    _vm._v(" "),
-                    _c(
-                      "v-btn",
-                      {
-                        attrs: { color: "blue darken-1", text: "" },
-                        on: {
-                          click: function ($event) {
-                            _vm.dialog = false
-                          },
-                        },
-                      },
-                      [
-                        _vm._v(
-                          "\n                        Close\n                    "
-                        ),
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "v-btn",
-                      {
-                        attrs: { color: "blue darken-1", text: "" },
-                        on: { click: _vm.addParameter },
-                      },
-                      [
-                        _vm._v(
-                          "\n                        Save\n                    "
-                        ),
-                      ]
-                    ),
-                  ],
-                  1
-                ),
-              ],
-              1
-            ),
-          ],
-          1
-        ),
+        _c("parameter-dialog-form", {
+          on: { parameterCreated: _vm.onParameterCreated },
+        }),
         _vm._v(" "),
         _c("v-simple-table", {
           scopedSlots: _vm._u([
@@ -4136,6 +4142,145 @@ var render = function () {
       1
     ),
   ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/app/components/ParameterDialogForm.vue?vue&type=template&id=35ac01c8&scoped=true&":
+/*!***********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/app/components/ParameterDialogForm.vue?vue&type=template&id=35ac01c8&scoped=true& ***!
+  \***********************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-dialog",
+    {
+      attrs: { "max-width": "600px" },
+      scopedSlots: _vm._u([
+        {
+          key: "activator",
+          fn: function (ref) {
+            var on = ref.on
+            var attrs = ref.attrs
+            return [
+              _c(
+                "v-btn",
+                _vm._g(
+                  _vm._b(
+                    { attrs: { color: "primary", dark: "" } },
+                    "v-btn",
+                    attrs,
+                    false
+                  ),
+                  on
+                ),
+                [_vm._v("\n            Pridať parameter\n        ")]
+              ),
+            ]
+          },
+        },
+      ]),
+      model: {
+        value: _vm.dialog,
+        callback: function ($$v) {
+          _vm.dialog = $$v
+        },
+        expression: "dialog",
+      },
+    },
+    [
+      _vm._v(" "),
+      _c(
+        "v-card",
+        [
+          _c("v-card-title", [
+            _c("span", { staticClass: "text-h5" }, [_vm._v("Nový parameter")]),
+          ]),
+          _vm._v(" "),
+          _c(
+            "v-card-text",
+            [
+              _c("v-text-field", {
+                attrs: { label: "Názov *", required: "" },
+                model: {
+                  value: _vm.name,
+                  callback: function ($$v) {
+                    _vm.name = $$v
+                  },
+                  expression: "name",
+                },
+              }),
+              _vm._v(" "),
+              _c("v-text-field", {
+                attrs: {
+                  label: "Koeficient *",
+                  type: "number",
+                  step: "0.1",
+                  required: "",
+                },
+                model: {
+                  value: _vm.coefficient,
+                  callback: function ($$v) {
+                    _vm.coefficient = $$v
+                  },
+                  expression: "coefficient",
+                },
+              }),
+              _vm._v(" "),
+              _c("small", [_vm._v("* pole je povinné")]),
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-card-actions",
+            [
+              _c("v-spacer"),
+              _vm._v(" "),
+              _c(
+                "v-btn",
+                {
+                  attrs: { color: "blue darken-1", text: "" },
+                  on: {
+                    click: function ($event) {
+                      _vm.dialog = false
+                    },
+                  },
+                },
+                [_vm._v("\n                Close\n            ")]
+              ),
+              _vm._v(" "),
+              _c(
+                "v-btn",
+                {
+                  attrs: { color: "blue darken-1", text: "" },
+                  on: { click: _vm.addParameter },
+                },
+                [_vm._v("\n                Save\n            ")]
+              ),
+            ],
+            1
+          ),
+        ],
+        1
+      ),
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

@@ -2,57 +2,7 @@
     <v-app>
         <div>
 
-            <v-dialog
-                v-model="dialog"
-                max-width="600px"
-            >
-                <template v-slot:activator="{ on, attrs }">
-                    <v-btn
-                        color="primary"
-                        dark
-                        v-bind="attrs"
-                        v-on="on"
-                    >
-                        Pridať parameter
-                    </v-btn>
-                </template>
-                <v-card>
-                    <v-card-title>
-                        <span class="text-h5">Nový parameter</span>
-                    </v-card-title>
-                    <v-card-text>
-                        <v-text-field
-                            label="Názov *"
-                            required
-                        ></v-text-field>
-
-                        <v-text-field
-                            label="Koeficient *"
-                            type="number"
-                            step="0.1"
-                            required
-                        ></v-text-field>
-                        <small>*indicates required field</small>
-                    </v-card-text>
-                    <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn
-                            color="blue darken-1"
-                            text
-                            @click="dialog = false"
-                        >
-                            Close
-                        </v-btn>
-                        <v-btn
-                            color="blue darken-1"
-                            text
-                            @click="addParameter"
-                        >
-                            Save
-                        </v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-dialog>
+            <parameter-dialog-form @parameterCreated="onParameterCreated"></parameter-dialog-form>
             <v-simple-table>
                 <template v-slot:default>
                     <thead>
@@ -83,32 +33,22 @@
 import {
     VSimpleTable,
     VBtn,
-    VApp,
-    VDialog,
-    VCard,
-    VCardActions,
-    VCardText,
-    VCardTitle,
-    VSpacer,
-    VTextField
+    VApp
 } from 'vuetify/lib'
+import ParameterDialogForm from "./components/ParameterDialogForm";
 
 export default {
     components: {
+        ParameterDialogForm,
         VSimpleTable,
         VBtn,
         VApp,
-        VDialog,
-        VCard,
-        VCardActions,
-        VCardText,
-        VCardTitle,
-        VSpacer,
-        VTextField
     },
     data() {
         return {
             dialog: false,
+            name: '',
+            coefficient: 0,
             parameters: [
                 {
                     name: 'parameter 1',
@@ -126,9 +66,8 @@ export default {
         }
     },
     methods: {
-        addParameter(event) {
-            this.dialog = false
-            this.parameters.push({name: 'Test', coefficient: 1})
+        onParameterCreated(parameter) {
+            this.parameters.push(parameter)
         }
     }
 }
