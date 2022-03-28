@@ -1,7 +1,6 @@
 <template>
     <v-app>
         <div>
-
             <parameter-dialog-form @parameterCreated="onParameterCreated"></parameter-dialog-form>
             <v-data-table
                 :headers="headers"
@@ -11,9 +10,9 @@
             >
 <!--                <template v-slot:item="{ item }">-->
 <!--                    <tr>-->
-<!--                        <td class="custom-class">{{ item.name }}</td>-->
-<!--                        <td class="custom-class">{{ item.age }}</td>-->
-<!--                        <td class="custom-class">{{ item.country }}</td>-->
+<!--                        <td>{{item.parameter}}</td>-->
+<!--                        <td>{{item.coefficient }}</td>-->
+<!--                        <td><v-icon>mdi-check</v-icon></td>-->
 <!--                    </tr>-->
 <!--                </template>-->
             </v-data-table>
@@ -25,7 +24,8 @@
 import {
     VDataTable,
     VBtn,
-    VApp
+    VApp,
+    VIcon
 } from 'vuetify/lib'
 import ParameterDialogForm from "./components/ParameterDialogForm";
 
@@ -35,6 +35,7 @@ export default {
         VDataTable,
         VBtn,
         VApp,
+        VIcon
     },
     data() {
         return {
