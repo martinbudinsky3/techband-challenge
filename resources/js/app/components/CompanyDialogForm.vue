@@ -78,7 +78,7 @@ export default {
     methods: {
         addCompany(event) {
             this.dialog = false
-            this.$emit('companyCreated', {value: '4', text: this.name})
+            this.$emit('companyCreated', {value: 4, text: this.name})
 
             this.name = ''
         }

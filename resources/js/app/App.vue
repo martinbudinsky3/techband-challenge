@@ -7,12 +7,11 @@
                 :headers="headers"
                 :items="parameters"
                 :hide-default-footer="true"
-                class="elevation-1"
-            >
+                class="elevation-1">
                 <template v-slot:item="{ item }">
                     <tr>
                         <td v-for="header in headers" @click="onTableCellClick(item, header.value)">
-                            <div v-if="header.value === 'parameter'">{{item.parameter}}</div>
+                            <div v-if="header.value === 'name'">{{item.name}}</div>
                             <div v-else-if="header.value === 'coefficient'">{{item.coefficient}}</div>
                             <div v-else-if="item.companies.includes(header.value)" ><v-icon>mdi-check</v-icon></div>
                             <div v-else></div>
@@ -46,31 +45,30 @@ export default {
     data() {
         return {
             dialog: false,
-
             parameters: [
                 {
                     id: 1,
-                    parameter: 'parameter 1',
+                    name: 'parameter 1',
                     coefficient: 0.5,
-                    companies: ['1', '2'],
+                    companies: [1, 2],
                 },
                 {
                     id: 2,
-                    parameter: 'parameter 2',
+                    name: 'parameter 2',
                     coefficient: 0.8,
-                    companies: ['2', '3'],
+                    companies: [2, 3],
                 },
                 {
                     id: 3,
-                    parameter: 'parameter 3',
+                    name: 'parameter 3',
                     coefficient: 0.2,
-                    companies: ['1', '3'],
+                    companies: [1, 3],
                 },
             ],
             staticHeaders: [
                 {
                     text: "Parameter",
-                    value: "parameter",
+                    value: "name",
                 },
                 {
                     text: "Coefficient",
@@ -80,15 +78,15 @@ export default {
             companies: [
                 {
                     text: 'company 1',
-                    value: '1',
+                    value: 1,
                 },
                 {
                     text: 'company 2',
-                    value: '2',
+                    value: 2,
                 },
                 {
                     text: 'company 3',
-                    value: '3',
+                    value: 3,
                 },
             ],
         }
@@ -99,6 +97,7 @@ export default {
         },
         onCompanyCreated(company) {
             this.companies.push(company)
+            this.calculateMatch()
         },
         onTableCellClick(row, col) {
             if(col === 'parameter' || col === 'coefficient') {
@@ -110,6 +109,21 @@ export default {
             } else {
                 row.companies.push(col)
             }
+        },
+        calculateMatch() {
+            let coefficientsSum = this.parameters.reduce((partialSum, param) => partialSum + param.coefficient, 0)
+
+            for (let company of this.companies) {
+                let companyScore = 0
+                for (let parameter of this.parameters) {
+                    if (parameter.companies.includes(company.value)) {
+                        companyScore += parameter.coefficient
+                    }
+                }
+                let matchInPercent = (companyScore / coefficientsSum) * 100
+                console.log(`Company: ${company.text}, match score: ${matchInPercent}%`)
+            }
+
         }
     },
     computed: {

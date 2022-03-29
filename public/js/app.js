@@ -2071,7 +2071,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuetify_lib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuetify/lib */ "./node_modules/vuetify/lib/components/VIcon/VIcon.js");
 /* harmony import */ var _components_ParameterDialogForm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/ParameterDialogForm */ "./resources/js/app/components/ParameterDialogForm.vue");
 /* harmony import */ var _components_CompanyDialogForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/CompanyDialogForm */ "./resources/js/app/components/CompanyDialogForm.vue");
-//
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 //
 //
 //
@@ -2114,36 +2119,36 @@ __webpack_require__.r(__webpack_exports__);
       dialog: false,
       parameters: [{
         id: 1,
-        parameter: 'parameter 1',
+        name: 'parameter 1',
         coefficient: 0.5,
-        companies: ['1', '2']
+        companies: [1, 2]
       }, {
         id: 2,
-        parameter: 'parameter 2',
+        name: 'parameter 2',
         coefficient: 0.8,
-        companies: ['2', '3']
+        companies: [2, 3]
       }, {
         id: 3,
-        parameter: 'parameter 3',
+        name: 'parameter 3',
         coefficient: 0.2,
-        companies: ['1', '3']
+        companies: [1, 3]
       }],
       staticHeaders: [{
         text: "Parameter",
-        value: "parameter"
+        value: "name"
       }, {
         text: "Coefficient",
         value: "coefficient"
       }],
       companies: [{
         text: 'company 1',
-        value: '1'
+        value: 1
       }, {
         text: 'company 2',
-        value: '2'
+        value: 2
       }, {
         text: 'company 3',
-        value: '3'
+        value: 3
       }]
     };
   },
@@ -2153,6 +2158,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     onCompanyCreated: function onCompanyCreated(company) {
       this.companies.push(company);
+      this.calculateMatch();
     },
     onTableCellClick: function onTableCellClick(row, col) {
       if (col === 'parameter' || col === 'coefficient') {
@@ -2165,6 +2171,45 @@ __webpack_require__.r(__webpack_exports__);
         });
       } else {
         row.companies.push(col);
+      }
+    },
+    calculateMatch: function calculateMatch() {
+      var coefficientsSum = this.parameters.reduce(function (partialSum, param) {
+        return partialSum + param.coefficient;
+      }, 0);
+
+      var _iterator = _createForOfIteratorHelper(this.companies),
+          _step;
+
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var company = _step.value;
+          var companyScore = 0;
+
+          var _iterator2 = _createForOfIteratorHelper(this.parameters),
+              _step2;
+
+          try {
+            for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+              var parameter = _step2.value;
+
+              if (parameter.companies.includes(company.value)) {
+                companyScore += parameter.coefficient;
+              }
+            }
+          } catch (err) {
+            _iterator2.e(err);
+          } finally {
+            _iterator2.f();
+          }
+
+          var matchInPercent = companyScore / coefficientsSum * 100;
+          console.log("Company: ".concat(company.text, ", match score: ").concat(matchInPercent, "%"));
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
       }
     }
   },
@@ -2264,7 +2309,7 @@ __webpack_require__.r(__webpack_exports__);
     addCompany: function addCompany(event) {
       this.dialog = false;
       this.$emit('companyCreated', {
-        value: '4',
+        value: 4,
         text: this.name
       });
       this.name = '';
@@ -2371,7 +2416,7 @@ __webpack_require__.r(__webpack_exports__);
       this.dialog = false;
       this.$emit('parameterCreated', {
         id: 4,
-        parameter: this.name,
+        name: this.name,
         coefficient: this.coefficient
       });
       this.name = '';
@@ -5151,8 +5196,8 @@ var render = function () {
                           },
                         },
                         [
-                          header.value === "parameter"
-                            ? _c("div", [_vm._v(_vm._s(item.parameter))])
+                          header.value === "name"
+                            ? _c("div", [_vm._v(_vm._s(item.name))])
                             : header.value === "coefficient"
                             ? _c("div", [_vm._v(_vm._s(item.coefficient))])
                             : item.companies.includes(header.value)
