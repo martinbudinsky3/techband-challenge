@@ -5,11 +5,18 @@
             <company-dialog-form @companyCreated="onCompanyCreated"></company-dialog-form>
             <v-data-table
                 :headers="headers"
-                :items="parameters"
+                :items="rows"
                 :hide-default-footer="true"
                 class="elevation-1">
                 <template v-slot:item="{ item }">
-                    <tr>
+                    <tr v-if="'isFooter' in item">
+                        <td v-for="header in headers" @click="onTableCellClick(item, header.value)">
+                            <div v-if="header.value === 'name'">{{item.name}}</div>
+                            <div v-else-if="header.value === 'coefficient'">{{item.coefficient}}</div>
+                            <div v-else >{{item[header.value]}}</div>
+                        </td>
+                    </tr>
+                    <tr v-else>
                         <td v-for="header in headers" @click="onTableCellClick(item, header.value)">
                             <div v-if="header.value === 'name'">{{item.name}}</div>
                             <div v-else-if="header.value === 'coefficient'">{{item.coefficient}}</div>
@@ -65,7 +72,7 @@ export default {
                     companies: [1, 3],
                 },
             ],
-            staticHeaders: [
+            staticHeader: [
                 {
                     text: "Parameter",
                     value: "name",
@@ -75,6 +82,12 @@ export default {
                     value: "coefficient",
                 }
             ],
+            footer: {
+                id: -1,
+                name: 'Fit',
+                coefficient: '',
+                isFooter: true,
+            },
             companies: [
                 {
                     text: 'company 1',
@@ -94,13 +107,14 @@ export default {
     methods: {
         onParameterCreated(parameter) {
             this.parameters.push(parameter)
+            this.calculateMatch()
         },
         onCompanyCreated(company) {
             this.companies.push(company)
             this.calculateMatch()
         },
         onTableCellClick(row, col) {
-            if(col === 'parameter' || col === 'coefficient') {
+            if(col === 'parameter' || col === 'coefficient' || 'isFooter' in row) {
                 return
             }
 
@@ -109,11 +123,14 @@ export default {
             } else {
                 row.companies.push(col)
             }
+
+            this.calculateMatch()
         },
         calculateMatch() {
-            let coefficientsSum = this.parameters.reduce((partialSum, param) => partialSum + param.coefficient, 0)
+            let coefficientsSum = this.parameters.reduce((partialSum, param) => partialSum + parseFloat(param.coefficient), 0)
 
             for (let company of this.companies) {
+                let companyId = company.value
                 let companyScore = 0
                 for (let parameter of this.parameters) {
                     if (parameter.companies.includes(company.value)) {
@@ -121,14 +138,17 @@ export default {
                     }
                 }
                 let matchInPercent = (companyScore / coefficientsSum) * 100
+                this.footer[companyId] = `${Math.round(matchInPercent * 100) / 100} %`
                 console.log(`Company: ${company.text}, match score: ${matchInPercent}%`)
             }
-
         }
     },
     computed: {
         headers: function () {
-            return this.staticHeaders.concat(this.companies)
+            return this.staticHeader.concat(this.companies)
+        },
+        rows: function () {
+            return this.parameters.concat(this.footer)
         }
     }
 }

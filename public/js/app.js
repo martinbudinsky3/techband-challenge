@@ -2102,6 +2102,13 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2133,13 +2140,19 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         coefficient: 0.2,
         companies: [1, 3]
       }],
-      staticHeaders: [{
+      staticHeader: [{
         text: "Parameter",
         value: "name"
       }, {
         text: "Coefficient",
         value: "coefficient"
       }],
+      footer: {
+        id: -1,
+        name: 'Fit',
+        coefficient: '',
+        isFooter: true
+      },
       companies: [{
         text: 'company 1',
         value: 1
@@ -2155,13 +2168,14 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
   methods: {
     onParameterCreated: function onParameterCreated(parameter) {
       this.parameters.push(parameter);
+      this.calculateMatch();
     },
     onCompanyCreated: function onCompanyCreated(company) {
       this.companies.push(company);
       this.calculateMatch();
     },
     onTableCellClick: function onTableCellClick(row, col) {
-      if (col === 'parameter' || col === 'coefficient') {
+      if (col === 'parameter' || col === 'coefficient' || 'isFooter' in row) {
         return;
       }
 
@@ -2172,10 +2186,12 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       } else {
         row.companies.push(col);
       }
+
+      this.calculateMatch();
     },
     calculateMatch: function calculateMatch() {
       var coefficientsSum = this.parameters.reduce(function (partialSum, param) {
-        return partialSum + param.coefficient;
+        return partialSum + parseFloat(param.coefficient);
       }, 0);
 
       var _iterator = _createForOfIteratorHelper(this.companies),
@@ -2184,6 +2200,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       try {
         for (_iterator.s(); !(_step = _iterator.n()).done;) {
           var company = _step.value;
+          var companyId = company.value;
           var companyScore = 0;
 
           var _iterator2 = _createForOfIteratorHelper(this.parameters),
@@ -2204,6 +2221,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
           }
 
           var matchInPercent = companyScore / coefficientsSum * 100;
+          this.footer[companyId] = "".concat(Math.round(matchInPercent * 100) / 100, " %");
           console.log("Company: ".concat(company.text, ", match score: ").concat(matchInPercent, "%"));
         }
       } catch (err) {
@@ -2215,7 +2233,10 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
   },
   computed: {
     headers: function headers() {
-      return this.staticHeaders.concat(this.companies);
+      return this.staticHeader.concat(this.companies);
+    },
+    rows: function rows() {
+      return this.parameters.concat(this.footer);
     }
   }
 });
@@ -2417,7 +2438,8 @@ __webpack_require__.r(__webpack_exports__);
       this.$emit('parameterCreated', {
         id: 4,
         name: this.name,
-        coefficient: this.coefficient
+        coefficient: this.coefficient,
+        companies: []
       });
       this.name = '';
       this.coefficient = 0;
@@ -5174,7 +5196,7 @@ var render = function () {
           staticClass: "elevation-1",
           attrs: {
             headers: _vm.headers,
-            items: _vm.parameters,
+            items: _vm.rows,
             "hide-default-footer": true,
           },
           scopedSlots: _vm._u([
@@ -5183,35 +5205,67 @@ var render = function () {
               fn: function (ref) {
                 var item = ref.item
                 return [
-                  _c(
-                    "tr",
-                    _vm._l(_vm.headers, function (header) {
-                      return _c(
-                        "td",
-                        {
-                          on: {
-                            click: function ($event) {
-                              return _vm.onTableCellClick(item, header.value)
+                  "isFooter" in item
+                    ? _c(
+                        "tr",
+                        _vm._l(_vm.headers, function (header) {
+                          return _c(
+                            "td",
+                            {
+                              on: {
+                                click: function ($event) {
+                                  return _vm.onTableCellClick(
+                                    item,
+                                    header.value
+                                  )
+                                },
+                              },
                             },
-                          },
-                        },
-                        [
-                          header.value === "name"
-                            ? _c("div", [_vm._v(_vm._s(item.name))])
-                            : header.value === "coefficient"
-                            ? _c("div", [_vm._v(_vm._s(item.coefficient))])
-                            : item.companies.includes(header.value)
-                            ? _c(
-                                "div",
-                                [_c("v-icon", [_vm._v("mdi-check")])],
-                                1
-                              )
-                            : _c("div"),
-                        ]
+                            [
+                              header.value === "name"
+                                ? _c("div", [_vm._v(_vm._s(item.name))])
+                                : header.value === "coefficient"
+                                ? _c("div", [_vm._v(_vm._s(item.coefficient))])
+                                : _c("div", [
+                                    _vm._v(_vm._s(item[header.value])),
+                                  ]),
+                            ]
+                          )
+                        }),
+                        0
                       )
-                    }),
-                    0
-                  ),
+                    : _c(
+                        "tr",
+                        _vm._l(_vm.headers, function (header) {
+                          return _c(
+                            "td",
+                            {
+                              on: {
+                                click: function ($event) {
+                                  return _vm.onTableCellClick(
+                                    item,
+                                    header.value
+                                  )
+                                },
+                              },
+                            },
+                            [
+                              header.value === "name"
+                                ? _c("div", [_vm._v(_vm._s(item.name))])
+                                : header.value === "coefficient"
+                                ? _c("div", [_vm._v(_vm._s(item.coefficient))])
+                                : item.companies.includes(header.value)
+                                ? _c(
+                                    "div",
+                                    [_c("v-icon", [_vm._v("mdi-check")])],
+                                    1
+                                  )
+                                : _c("div"),
+                            ]
+                          )
+                        }),
+                        0
+                      ),
                 ]
               },
             },
