@@ -11,11 +11,11 @@
             >
                 <template v-slot:item="{ item }">
                     <tr>
-                        <td v-for="header in headers">
-                            <span v-if="header.value === 'parameter'">{{item.parameter}}</span>
-                            <span v-else-if="header.value === 'coefficient'">{{item.coefficient}}</span>
-                            <span v-else-if="item.companies.includes(header.value)"><v-icon>mdi-check</v-icon></span>
-                            <span v-else></span>
+                        <td v-for="header in headers" @click="onTableCellClick(item, header.value)">
+                            <div v-if="header.value === 'parameter'">{{item.parameter}}</div>
+                            <div v-else-if="header.value === 'coefficient'">{{item.coefficient}}</div>
+                            <div v-else-if="item.companies.includes(header.value)" ><v-icon>mdi-check</v-icon></div>
+                            <div v-else></div>
                         </td>
                     </tr>
                 </template>
@@ -65,7 +65,7 @@ export default {
                     companies: ['1', '3'],
                 },
             ],
-            hardHeaders: [
+            staticHeaders: [
                 {
                     text: "Parameter",
                     value: "parameter",
@@ -94,11 +94,23 @@ export default {
     methods: {
         onParameterCreated(parameter) {
             this.parameters.push(parameter)
+        },
+
+        onTableCellClick(row, col) {
+            if(col === 'parameter' || col === 'coefficient') {
+                return
+            }
+
+            if(row.companies.includes(col)) {
+                row.companies = row.companies.filter(item => item !== col)
+            } else {
+                row.companies.push(col)
+            }
         }
     },
     computed: {
         headers: function () {
-            return this.hardHeaders.concat(this.companies)
+            return this.staticHeaders.concat(this.companies)
         }
     }
 }

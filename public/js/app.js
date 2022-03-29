@@ -2125,7 +2125,7 @@ __webpack_require__.r(__webpack_exports__);
         coefficient: 0.2,
         companies: ['1', '3']
       }],
-      hardHeaders: [{
+      staticHeaders: [{
         text: "Parameter",
         value: "parameter"
       }, {
@@ -2147,11 +2147,24 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     onParameterCreated: function onParameterCreated(parameter) {
       this.parameters.push(parameter);
+    },
+    onTableCellClick: function onTableCellClick(row, col) {
+      if (col === 'parameter' || col === 'coefficient') {
+        return;
+      }
+
+      if (row.companies.includes(col)) {
+        row.companies = row.companies.filter(function (item) {
+          return item !== col;
+        });
+      } else {
+        row.companies.push(col);
+      }
     }
   },
   computed: {
     headers: function headers() {
-      return this.hardHeaders.concat(this.companies);
+      return this.staticHeaders.concat(this.companies);
     }
   }
 });
@@ -4949,15 +4962,29 @@ var render = function () {
                   _c(
                     "tr",
                     _vm._l(_vm.headers, function (header) {
-                      return _c("td", [
-                        header.value === "parameter"
-                          ? _c("span", [_vm._v(_vm._s(item.parameter))])
-                          : header.value === "coefficient"
-                          ? _c("span", [_vm._v(_vm._s(item.coefficient))])
-                          : item.companies.includes(header.value)
-                          ? _c("span", [_c("v-icon", [_vm._v("mdi-check")])], 1)
-                          : _c("span"),
-                      ])
+                      return _c(
+                        "td",
+                        {
+                          on: {
+                            click: function ($event) {
+                              return _vm.onTableCellClick(item, header.value)
+                            },
+                          },
+                        },
+                        [
+                          header.value === "parameter"
+                            ? _c("div", [_vm._v(_vm._s(item.parameter))])
+                            : header.value === "coefficient"
+                            ? _c("div", [_vm._v(_vm._s(item.coefficient))])
+                            : item.companies.includes(header.value)
+                            ? _c(
+                                "div",
+                                [_c("v-icon", [_vm._v("mdi-check")])],
+                                1
+                              )
+                            : _c("div"),
+                        ]
+                      )
                     }),
                     0
                   ),
