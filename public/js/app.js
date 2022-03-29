@@ -2092,6 +2092,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2108,15 +2112,18 @@ __webpack_require__.r(__webpack_exports__);
       parameters: [{
         id: 1,
         parameter: 'parameter 1',
-        coefficient: 0.5
+        coefficient: 0.5,
+        companies: ['1', '2']
       }, {
         id: 2,
         parameter: 'parameter 2',
-        coefficient: 0.8
+        coefficient: 0.8,
+        companies: ['2', '3']
       }, {
         id: 3,
         parameter: 'parameter 3',
-        coefficient: 0.2
+        coefficient: 0.2,
+        companies: ['1', '3']
       }],
       hardHeaders: [{
         text: "Parameter",
@@ -2144,7 +2151,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     headers: function headers() {
-      // `this` points to the vm instance
       return this.hardHeaders.concat(this.companies);
     }
   }
@@ -4934,6 +4940,31 @@ var render = function () {
             items: _vm.parameters,
             "hide-default-footer": true,
           },
+          scopedSlots: _vm._u([
+            {
+              key: "item",
+              fn: function (ref) {
+                var item = ref.item
+                return [
+                  _c(
+                    "tr",
+                    _vm._l(_vm.headers, function (header) {
+                      return _c("td", [
+                        header.value === "parameter"
+                          ? _c("span", [_vm._v(_vm._s(item.parameter))])
+                          : header.value === "coefficient"
+                          ? _c("span", [_vm._v(_vm._s(item.coefficient))])
+                          : item.companies.includes(header.value)
+                          ? _c("span", [_c("v-icon", [_vm._v("mdi-check")])], 1)
+                          : _c("span"),
+                      ])
+                    }),
+                    0
+                  ),
+                ]
+              },
+            },
+          ]),
         }),
       ],
       1

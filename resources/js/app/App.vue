@@ -2,19 +2,23 @@
     <v-app>
         <div>
             <parameter-dialog-form @parameterCreated="onParameterCreated"></parameter-dialog-form>
+
             <v-data-table
                 :headers="headers"
                 :items="parameters"
                 :hide-default-footer="true"
                 class="elevation-1"
             >
-<!--                <template v-slot:item="{ item }">-->
-<!--                    <tr>-->
-<!--                        <td>{{item.parameter}}</td>-->
-<!--                        <td>{{item.coefficient }}</td>-->
-<!--                        <td><v-icon>mdi-check</v-icon></td>-->
-<!--                    </tr>-->
-<!--                </template>-->
+                <template v-slot:item="{ item }">
+                    <tr>
+                        <td v-for="header in headers">
+                            <span v-if="header.value === 'parameter'">{{item.parameter}}</span>
+                            <span v-else-if="header.value === 'coefficient'">{{item.coefficient}}</span>
+                            <span v-else-if="item.companies.includes(header.value)"><v-icon>mdi-check</v-icon></span>
+                            <span v-else></span>
+                        </td>
+                    </tr>
+                </template>
             </v-data-table>
         </div>
     </v-app>
@@ -46,16 +50,19 @@ export default {
                     id: 1,
                     parameter: 'parameter 1',
                     coefficient: 0.5,
+                    companies: ['1', '2'],
                 },
                 {
                     id: 2,
                     parameter: 'parameter 2',
                     coefficient: 0.8,
+                    companies: ['2', '3'],
                 },
                 {
                     id: 3,
                     parameter: 'parameter 3',
                     coefficient: 0.2,
+                    companies: ['1', '3'],
                 },
             ],
             hardHeaders: [
@@ -91,7 +98,6 @@ export default {
     },
     computed: {
         headers: function () {
-            // `this` points to the vm instance
             return this.hardHeaders.concat(this.companies)
         }
     }
