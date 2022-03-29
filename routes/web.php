@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use \App\Http\Controllers\ParameterController;
+use \App\Http\Controllers\CompanyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +16,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Auth::routes();
+
+Route::prefix('api')->group(function () {
+    Route::post('parameters/', [ParameterController::class, 'store']);
+    Route::post('companies/', [CompanyController::class, 'store']);
+    Route::put('parameters/{parameter}/companies/{company}', [ParameterController::class, 'index']);
+
+    Route::prefix('admin')->group(function () {
+        Route::prefix('users')->group(function () {
+            Route::get('/', [UserController::class, 'index']);
+            Route::get('{user}/', [UserController::class, 'show']);
+        });
+    });
+});
 
 Route::get('admin/{any?}/', function () {
     return view('layouts.app');

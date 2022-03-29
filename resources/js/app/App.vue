@@ -14,7 +14,6 @@
                             v-for="header in headers"
                             v-bind:class="{'light-green': maxMatchId === header.value}"
                         >
-
                             <div v-if="header.value === 'name'">{{item.name}}</div>
                             <div v-else-if="header.value === 'coefficient'">{{item.coefficient}}</div>
                             <div v-else >{{item[header.value]}}</div>
@@ -152,8 +151,6 @@ export default {
                     this.maxMatchId = companyId
                 }
             }
-
-            console.log(this.footer)
         }
     },
     computed: {
