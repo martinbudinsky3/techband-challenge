@@ -2,7 +2,7 @@
     <v-app>
         <div>
             <parameter-dialog-form @parameterCreated="onParameterCreated"></parameter-dialog-form>
-
+            <company-dialog-form @companyCreated="onCompanyCreated"></company-dialog-form>
             <v-data-table
                 :headers="headers"
                 :items="parameters"
@@ -32,9 +32,11 @@ import {
     VIcon
 } from 'vuetify/lib'
 import ParameterDialogForm from "./components/ParameterDialogForm";
+import CompanyDialogForm from "./components/CompanyDialogForm";
 
 export default {
     components: {
+        CompanyDialogForm,
         ParameterDialogForm,
         VDataTable,
         VBtn,
@@ -95,7 +97,9 @@ export default {
         onParameterCreated(parameter) {
             this.parameters.push(parameter)
         },
-
+        onCompanyCreated(company) {
+            this.companies.push(company)
+        },
         onTableCellClick(row, col) {
             if(col === 'parameter' || col === 'coefficient') {
                 return
