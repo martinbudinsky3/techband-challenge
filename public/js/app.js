@@ -2109,6 +2109,10 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -2124,6 +2128,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
   data: function data() {
     return {
       dialog: false,
+      maxMatchId: -1,
       parameters: [{
         id: 1,
         name: 'parameter 1',
@@ -2193,6 +2198,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       var coefficientsSum = this.parameters.reduce(function (partialSum, param) {
         return partialSum + parseFloat(param.coefficient);
       }, 0);
+      this.maxMatchId = -1;
+      var maxScore = -1;
 
       var _iterator = _createForOfIteratorHelper(this.companies),
           _step;
@@ -2222,13 +2229,19 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
           var matchInPercent = companyScore / coefficientsSum * 100;
           this.footer[companyId] = "".concat(Math.round(matchInPercent * 100) / 100, " %");
-          console.log("Company: ".concat(company.text, ", match score: ").concat(matchInPercent, "%"));
+
+          if (matchInPercent > maxScore) {
+            maxScore = matchInPercent;
+            this.maxMatchId = companyId;
+          }
         }
       } catch (err) {
         _iterator.e(err);
       } finally {
         _iterator.f();
       }
+
+      console.log(this.footer);
     }
   },
   computed: {
@@ -5212,6 +5225,9 @@ var render = function () {
                           return _c(
                             "td",
                             {
+                              class: {
+                                "light-green": _vm.maxMatchId === header.value,
+                              },
                               on: {
                                 click: function ($event) {
                                   return _vm.onTableCellClick(

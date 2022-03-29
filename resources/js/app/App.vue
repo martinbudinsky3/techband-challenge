@@ -10,7 +10,11 @@
                 class="elevation-1">
                 <template v-slot:item="{ item }">
                     <tr v-if="'isFooter' in item">
-                        <td v-for="header in headers" @click="onTableCellClick(item, header.value)">
+                        <td @click="onTableCellClick(item, header.value)"
+                            v-for="header in headers"
+                            v-bind:class="{'light-green': maxMatchId === header.value}"
+                        >
+
                             <div v-if="header.value === 'name'">{{item.name}}</div>
                             <div v-else-if="header.value === 'coefficient'">{{item.coefficient}}</div>
                             <div v-else >{{item[header.value]}}</div>
@@ -52,6 +56,7 @@ export default {
     data() {
         return {
             dialog: false,
+            maxMatchId: -1,
             parameters: [
                 {
                     id: 1,
@@ -128,6 +133,8 @@ export default {
         },
         calculateMatch() {
             let coefficientsSum = this.parameters.reduce((partialSum, param) => partialSum + parseFloat(param.coefficient), 0)
+            this.maxMatchId = -1
+            let maxScore = -1
 
             for (let company of this.companies) {
                 let companyId = company.value
@@ -139,8 +146,14 @@ export default {
                 }
                 let matchInPercent = (companyScore / coefficientsSum) * 100
                 this.footer[companyId] = `${Math.round(matchInPercent * 100) / 100} %`
-                console.log(`Company: ${company.text}, match score: ${matchInPercent}%`)
+
+                if (matchInPercent > maxScore) {
+                    maxScore = matchInPercent
+                    this.maxMatchId = companyId
+                }
             }
+
+            console.log(this.footer)
         }
     },
     computed: {
