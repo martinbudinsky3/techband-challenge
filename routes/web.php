@@ -32,7 +32,8 @@ Route::post('logout', [LoginController::class, 'loginAdmin'])->middleware('auth:
 Route::prefix('api')->group(function () {
     Route::post('parameters/', [ParameterController::class, 'store']);
     Route::post('companies/', [CompanyController::class, 'store']);
-    Route::put('parameters/{parameter}/companies/{company}', [ParameterController::class, 'updateChecked']);
+    Route::post('parameters/{parameter}/companies/{company}', [ParameterController::class, 'storeCompanyRelation']);
+    Route::delete('parameters/{parameter}/companies/{company}', [ParameterController::class, 'deleteCompanyRelation']);
 
     Route::prefix('admin')->group(function () {
         Route::prefix('users')->group(function () {

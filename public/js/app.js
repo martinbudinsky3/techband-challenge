@@ -2276,10 +2276,8 @@ __webpack_require__.r(__webpack_exports__);
     addParameter: function addParameter(event) {
       this.dialog = false;
       this.$emit('parameterCreated', {
-        // id: 4,
         name: this.name,
-        coefficient: this.coefficient // companies: []
-
+        coefficient: this.coefficient
       });
       this.name = '';
       this.coefficient = 0;
@@ -2556,6 +2554,19 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       });
     },
     onCompanyCreated: function onCompanyCreated(company) {
+      var _this2 = this;
+
+      axios.post('/api/companies', {
+        'name': company.text
+      }).then(function (response) {
+        company['value'] = response.data.id;
+
+        _this2.companies.push(company);
+
+        _this2.calculateMatch();
+      })["catch"](function (error) {
+        console.log(error);
+      });
       this.companies.push(company);
       this.calculateMatch();
     },

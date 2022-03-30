@@ -122,6 +122,15 @@ export default {
                 })
         },
         onCompanyCreated(company) {
+            axios.post('/api/companies', {'name': company.text})
+                .then(response => {
+                    company['value'] = response.data.id
+                    this.companies.push(company)
+                    this.calculateMatch()
+                })
+                .catch(error => {
+                    console.log(error)
+                })
             this.companies.push(company)
             this.calculateMatch()
         },

@@ -21,7 +21,12 @@ class ParameterController extends Controller
         return response()->json(['id' => $parameter->id], 201);
     }
 
-    public function updateChecked(Parameter $parameter, Company $company)
+    public function storeCompanyRelation(Parameter $parameter, Company $company)
+    {
+
+    }
+
+    public function deleteCompanyRelation(Parameter $parameter, Company $company)
     {
 
     }

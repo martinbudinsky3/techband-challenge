@@ -17,7 +17,6 @@ class CreateCompanyParameterTable extends Migration
             $table->id();
             $table->foreignId('company_id')->constrained()->cascadeOnDelete();
             $table->foreignId('parameter_id')->constrained()->cascadeOnDelete();
-            $table->boolean('checked');
             $table->timestamps();
         });
     }
