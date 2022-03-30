@@ -11,7 +11,7 @@ window.Vue = Vue
  */
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
-window.axios.defaults.baseURL = '127.0.0.1:8000'
+//window.axios.defaults.baseURL = '127.0.0.1:8000'
 window.axios.defaults.withCredentials = true
 window.axios.interceptors.response.use((response) => response, (error) => {
     if (

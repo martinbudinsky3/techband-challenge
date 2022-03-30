@@ -3,6 +3,9 @@ import Router from 'vue-router'
 
 // views
 import MainPage from './views/MainPage.vue'
+import Login from './views/Login.vue'
+import AdminLogin from './views/AdminLogin.vue'
+
 //import NotFound from './views/NotFound.vue'
 
 // users
@@ -18,10 +21,14 @@ export default new Router({
             path: '/',
             component: MainPage
         },
-        // {
-        //     path: '/admin/',
-        //     component: Dashboard
-        // },
+        {
+            path: '/login/',
+            component: Login
+        },
+        {
+            path: '/admin/login',
+            component: AdminLogin
+        },
         //
         // // POSTS
         // {

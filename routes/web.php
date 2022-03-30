@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use \App\Http\Controllers\ParameterController;
 use \App\Http\Controllers\CompanyController;
+use \App\Http\Controllers\Auth\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +17,15 @@ use \App\Http\Controllers\CompanyController;
 |
 */
 
-Auth::routes();
+Route::get('login/', function () {
+    return view('layouts.app');
+});
+Route::get('admin/login', function () {
+    return view('layouts.app');
+});
+Route::post('login/', [LoginController::class, 'login']);
+Route::post('admin/login', [LoginController::class, 'loginAdmin']);
+
 
 Route::prefix('api')->group(function () {
     Route::post('parameters/', [ParameterController::class, 'store']);
@@ -33,8 +42,8 @@ Route::prefix('api')->group(function () {
 
 Route::get('admin/{any?}/', function () {
     return view('layouts.app');
-})->where('any', '.*')/*->middleware('auth')*/;
+})->where('any', '.*')->middleware(['auth:sanctum', 'can:administrate']);
 
 Route::get('{any?}/', function () {
     return view('layouts.app');
-})->where('any', '.*')/*->middleware('auth')*/;
+})->where('any', '.*')->middleware('auth:sanctum');
