@@ -2276,10 +2276,10 @@ __webpack_require__.r(__webpack_exports__);
     addParameter: function addParameter(event) {
       this.dialog = false;
       this.$emit('parameterCreated', {
-        id: 4,
+        // id: 4,
         name: this.name,
-        coefficient: this.coefficient,
-        companies: []
+        coefficient: this.coefficient // companies: []
+
       });
       this.name = '';
       this.coefficient = 0;
@@ -2542,8 +2542,18 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
   },
   methods: {
     onParameterCreated: function onParameterCreated(parameter) {
-      this.parameters.push(parameter);
-      this.calculateMatch();
+      var _this = this;
+
+      axios.post('/api/parameters', parameter).then(function (response) {
+        parameter['id'] = response.data.id;
+        parameter['companies'] = [];
+
+        _this.parameters.push(parameter);
+
+        _this.calculateMatch();
+      })["catch"](function (error) {
+        console.log(error);
+      });
     },
     onCompanyCreated: function onCompanyCreated(company) {
       this.companies.push(company);

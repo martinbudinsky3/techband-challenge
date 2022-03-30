@@ -9,6 +9,12 @@ class Parameter extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'coefficient',
+        'user_id',
+    ];
+
     public function companies() {
         return $this->hasMany(Company::class);
     }

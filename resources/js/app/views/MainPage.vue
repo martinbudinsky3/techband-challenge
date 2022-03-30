@@ -110,8 +110,16 @@ export default {
     },
     methods: {
         onParameterCreated(parameter) {
-            this.parameters.push(parameter)
-            this.calculateMatch()
+            axios.post('/api/parameters', parameter)
+                .then(response => {
+                    parameter['id'] = response.data.id
+                    parameter['companies'] = []
+                    this.parameters.push(parameter)
+                    this.calculateMatch()
+                })
+                .catch(error => {
+                    console.log(error)
+                })
         },
         onCompanyCreated(company) {
             this.companies.push(company)
