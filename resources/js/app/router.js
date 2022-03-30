@@ -1,5 +1,6 @@
 // router
 import Router from 'vue-router'
+import Vue from 'vue'
 
 // views
 import MainPage from './views/MainPage.vue'

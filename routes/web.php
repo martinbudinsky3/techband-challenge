@@ -19,13 +19,15 @@ use \App\Http\Controllers\Auth\LoginController;
 
 Route::get('login/', function () {
     return view('layouts.app');
-});
+})->name('login');
+
 Route::get('admin/login', function () {
     return view('layouts.app');
-});
+})->name('login_admin');
+
 Route::post('login/', [LoginController::class, 'login']);
 Route::post('admin/login', [LoginController::class, 'loginAdmin']);
-
+Route::post('logout', [LoginController::class, 'loginAdmin'])->middleware('auth:sanctum');
 
 Route::prefix('api')->group(function () {
     Route::post('parameters/', [ParameterController::class, 'store']);
@@ -42,7 +44,7 @@ Route::prefix('api')->group(function () {
 
 Route::get('admin/{any?}/', function () {
     return view('layouts.app');
-})->where('any', '.*')->middleware(['auth:sanctum', 'can:administrate']);
+})->where('any', '.*')->middleware(['auth:sanctum', 'can:administrate'])->name('admin');
 
 Route::get('{any?}/', function () {
     return view('layouts.app');
