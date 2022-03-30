@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 use \App\Http\Controllers\ParameterController;
 use \App\Http\Controllers\CompanyController;
 
@@ -20,7 +21,7 @@ Auth::routes();
 Route::prefix('api')->group(function () {
     Route::post('parameters/', [ParameterController::class, 'store']);
     Route::post('companies/', [CompanyController::class, 'store']);
-    Route::put('parameters/{parameter}/companies/{company}', [ParameterController::class, 'index']);
+    Route::put('parameters/{parameter}/companies/{company}', [ParameterController::class, 'updateChecked']);
 
     Route::prefix('admin')->group(function () {
         Route::prefix('users')->group(function () {
