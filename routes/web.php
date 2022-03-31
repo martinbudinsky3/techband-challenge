@@ -27,9 +27,9 @@ Route::get('admin/login', function () {
 
 Route::post('login/', [LoginController::class, 'login']);
 Route::post('admin/login', [LoginController::class, 'loginAdmin']);
-//Route::post('logout', [LoginController::class, 'loginAdmin'])->middleware('auth:sanctum');
+Route::post('logout', [LoginController::class, 'logout'])->middleware('auth:sanctum');
 
-Route::prefix('api')->group(function () {
+Route::group(['prefix' => 'api', 'middleware' => 'auth:sanctum'], function () {
     Route::post('parameters/', [ParameterController::class, 'store']);
     Route::post('companies/', [CompanyController::class, 'store']);
     Route::post('parameters/{parameter}/companies/{company}', [ParameterController::class, 'storeCompanyRelation']);
@@ -37,8 +37,8 @@ Route::prefix('api')->group(function () {
 
     Route::prefix('admin')->group(function () {
         Route::prefix('users')->group(function () {
-            Route::get('/', [UserController::class, 'index']);
-            Route::get('{user}/', [UserController::class, 'show']);
+            Route::get('/', [UserController::class, 'index'])->middleware('can:administrate');
+            Route::get('{user}/', [UserController::class, 'show'])->middleware('can:show', \App\Models\User::class);
         });
     });
 });
