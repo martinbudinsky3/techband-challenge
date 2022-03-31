@@ -23,11 +23,11 @@ class ParameterController extends Controller
 
     public function storeCompanyRelation(Parameter $parameter, Company $company)
     {
-
+        $parameter->companies()->attach($company->id);
     }
 
     public function deleteCompanyRelation(Parameter $parameter, Company $company)
     {
-
+        $parameter->companies()->detach($company->id);
     }
 }

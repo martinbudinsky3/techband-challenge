@@ -13,4 +13,8 @@ class Company extends Model
         'name',
         'user_id',
     ];
+
+    public function parameters() {
+        return $this->belongsToMany(Parameter::class);
+    }
 }

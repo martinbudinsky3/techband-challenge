@@ -1,6 +1,6 @@
 import axios from 'axios'
 import Vue from 'vue'
-import Router from './router'
+import router from './router'
 
 window.axios = axios
 window.Vue = Vue
@@ -19,7 +19,7 @@ window.axios.interceptors.response.use((response) => response, (error) => {
     if (
         error.response &&
         (error.response.status === 401 || error.response.status === 419) &&
-        Router.currentRoute.path !== '/login'
+        router.currentRoute.path !== '/login'
     ) {
         router.push({ path: '/login' })
     } else {

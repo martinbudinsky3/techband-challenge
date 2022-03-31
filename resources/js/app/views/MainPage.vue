@@ -56,26 +56,7 @@ export default {
         return {
             dialog: false,
             maxMatchId: -1,
-            parameters: [
-                {
-                    id: 1,
-                    name: 'parameter 1',
-                    coefficient: 0.5,
-                    companies: [1, 2],
-                },
-                {
-                    id: 2,
-                    name: 'parameter 2',
-                    coefficient: 0.8,
-                    companies: [2, 3],
-                },
-                {
-                    id: 3,
-                    name: 'parameter 3',
-                    coefficient: 0.2,
-                    companies: [1, 3],
-                },
-            ],
+            parameters: [],
             staticHeader: [
                 {
                     text: "Parameter",
@@ -92,21 +73,20 @@ export default {
                 coefficient: '',
                 isFooter: true,
             },
-            companies: [
-                {
-                    text: 'company 1',
-                    value: 1,
-                },
-                {
-                    text: 'company 2',
-                    value: 2,
-                },
-                {
-                    text: 'company 3',
-                    value: 3,
-                },
-            ],
+            companies: [],
         }
+    },
+    mounted() {
+        axios.get('api/admin/users/1')
+            .then(response => {
+                let companiesFromApi = response.data.companies
+                for (let company of companiesFromApi) {
+                    this.companies.push({'text': company.name, 'value': company.id})
+                }
+                this.parameters = response.data.parameters
+                this.calculateMatch()
+            })
+            .catch(error => console.log(error))
     },
     methods: {
         onParameterCreated(parameter) {
@@ -140,12 +120,20 @@ export default {
             }
 
             if (row.companies.includes(col)) {
-                row.companies = row.companies.filter(item => item !== col)
-            } else {
-                row.companies.push(col)
-            }
+                axios.delete(`/api/parameters/${row.id}/companies/${col}`)
+                    .then(response => {})
+                    .catch(error => console.log(error))
 
-            this.calculateMatch()
+                row.companies = row.companies.filter(item => item !== col)
+                this.calculateMatch()
+            } else {
+                axios.post(`/api/parameters/${row.id}/companies/${col}`, {})
+                    .then(response => {})
+                    .catch(error => console.log(error))
+
+                row.companies.push(col)
+                this.calculateMatch()
+            }
         },
         calculateMatch() {
             let coefficientsSum = this.parameters.reduce((partialSum, param) => partialSum + parseFloat(param.coefficient), 0)

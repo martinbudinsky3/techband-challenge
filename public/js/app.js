@@ -2497,22 +2497,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     return {
       dialog: false,
       maxMatchId: -1,
-      parameters: [{
-        id: 1,
-        name: 'parameter 1',
-        coefficient: 0.5,
-        companies: [1, 2]
-      }, {
-        id: 2,
-        name: 'parameter 2',
-        coefficient: 0.8,
-        companies: [2, 3]
-      }, {
-        id: 3,
-        name: 'parameter 3',
-        coefficient: 0.2,
-        companies: [1, 3]
-      }],
+      parameters: [],
       staticHeader: [{
         text: "Parameter",
         value: "name"
@@ -2526,44 +2511,66 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         coefficient: '',
         isFooter: true
       },
-      companies: [{
-        text: 'company 1',
-        value: 1
-      }, {
-        text: 'company 2',
-        value: 2
-      }, {
-        text: 'company 3',
-        value: 3
-      }]
+      companies: []
     };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get('api/admin/users/1').then(function (response) {
+      var companiesFromApi = response.data.companies;
+
+      var _iterator = _createForOfIteratorHelper(companiesFromApi),
+          _step;
+
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var company = _step.value;
+
+          _this.companies.push({
+            'text': company.name,
+            'value': company.id
+          });
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+
+      _this.parameters = response.data.parameters;
+
+      _this.calculateMatch();
+    })["catch"](function (error) {
+      return console.log(error);
+    });
   },
   methods: {
     onParameterCreated: function onParameterCreated(parameter) {
-      var _this = this;
+      var _this2 = this;
 
       axios.post('/api/parameters', parameter).then(function (response) {
         parameter['id'] = response.data.id;
         parameter['companies'] = [];
 
-        _this.parameters.push(parameter);
+        _this2.parameters.push(parameter);
 
-        _this.calculateMatch();
+        _this2.calculateMatch();
       })["catch"](function (error) {
         console.log(error);
       });
     },
     onCompanyCreated: function onCompanyCreated(company) {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.post('/api/companies', {
         'name': company.text
       }).then(function (response) {
         company['value'] = response.data.id;
 
-        _this2.companies.push(company);
+        _this3.companies.push(company);
 
-        _this2.calculateMatch();
+        _this3.calculateMatch();
       })["catch"](function (error) {
         console.log(error);
       });
@@ -2576,14 +2583,20 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       }
 
       if (row.companies.includes(col)) {
+        axios["delete"]("/api/parameters/".concat(row.id, "/companies/").concat(col)).then(function (response) {})["catch"](function (error) {
+          return console.log(error);
+        });
         row.companies = row.companies.filter(function (item) {
           return item !== col;
         });
+        this.calculateMatch();
       } else {
+        axios.post("/api/parameters/".concat(row.id, "/companies/").concat(col), {}).then(function (response) {})["catch"](function (error) {
+          return console.log(error);
+        });
         row.companies.push(col);
+        this.calculateMatch();
       }
-
-      this.calculateMatch();
     },
     calculateMatch: function calculateMatch() {
       var coefficientsSum = this.parameters.reduce(function (partialSum, param) {
@@ -2592,30 +2605,30 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       this.maxMatchId = -1;
       var maxScore = -1;
 
-      var _iterator = _createForOfIteratorHelper(this.companies),
-          _step;
+      var _iterator2 = _createForOfIteratorHelper(this.companies),
+          _step2;
 
       try {
-        for (_iterator.s(); !(_step = _iterator.n()).done;) {
-          var company = _step.value;
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+          var company = _step2.value;
           var companyId = company.value;
           var companyScore = 0;
 
-          var _iterator2 = _createForOfIteratorHelper(this.parameters),
-              _step2;
+          var _iterator3 = _createForOfIteratorHelper(this.parameters),
+              _step3;
 
           try {
-            for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-              var parameter = _step2.value;
+            for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+              var parameter = _step3.value;
 
               if (parameter.companies.includes(company.value)) {
                 companyScore += parameter.coefficient;
               }
             }
           } catch (err) {
-            _iterator2.e(err);
+            _iterator3.e(err);
           } finally {
-            _iterator2.f();
+            _iterator3.f();
           }
 
           var matchInPercent = companyScore / coefficientsSum * 100;
@@ -2627,9 +2640,9 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
           }
         }
       } catch (err) {
-        _iterator.e(err);
+        _iterator2.e(err);
       } finally {
-        _iterator.f();
+        _iterator2.f();
       }
     }
   },
@@ -2706,7 +2719,7 @@ window.axios.interceptors.response.use(function (response) {
   return response;
 }, function (error) {
   if (error.response && (error.response.status === 401 || error.response.status === 419) && _router__WEBPACK_IMPORTED_MODULE_1__["default"].currentRoute.path !== '/login') {
-    router.push({
+    _router__WEBPACK_IMPORTED_MODULE_1__["default"].push({
       path: '/login'
     });
   } else {

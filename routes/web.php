@@ -27,7 +27,7 @@ Route::get('admin/login', function () {
 
 Route::post('login/', [LoginController::class, 'login']);
 Route::post('admin/login', [LoginController::class, 'loginAdmin']);
-Route::post('logout', [LoginController::class, 'loginAdmin'])->middleware('auth:sanctum');
+//Route::post('logout', [LoginController::class, 'loginAdmin'])->middleware('auth:sanctum');
 
 Route::prefix('api')->group(function () {
     Route::post('parameters/', [ParameterController::class, 'store']);
