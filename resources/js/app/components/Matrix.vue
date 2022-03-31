@@ -134,9 +134,10 @@ export default {
                 let companyScore = 0
                 for (let parameter of this.parameters) {
                     if (parameter.companies.includes(company.value)) {
-                        companyScore += parameter.coefficient
+                        companyScore += parseFloat(parameter.coefficient)
                     }
                 }
+                console.log(companyScore)
                 let matchInPercent = (companyScore / coefficientsSum) * 100
                 this.footer[companyId] = `${Math.round(matchInPercent * 100) / 100} %`
 

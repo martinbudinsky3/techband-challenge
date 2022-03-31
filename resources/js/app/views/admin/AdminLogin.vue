@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="mt-6">
         <v-text-field
             v-model="email"
             label="Email"

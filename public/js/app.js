@@ -2360,7 +2360,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
               var parameter = _step3.value;
 
               if (parameter.companies.includes(company.value)) {
-                companyScore += parameter.coefficient;
+                companyScore += parseFloat(parameter.coefficient);
               }
             }
           } catch (err) {
@@ -2369,6 +2369,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
             _iterator3.f();
           }
 
+          console.log(companyScore);
           var matchInPercent = companyScore / coefficientsSum * 100;
           this.footer[companyId] = "".concat(Math.round(matchInPercent * 100) / 100, " %");
 
@@ -7033,7 +7034,7 @@ var render = function () {
         1
       ),
       _vm._v(" "),
-      _c("main", [_c("router-view")], 1),
+      _c("main", { staticClass: "container p-3" }, [_c("router-view")], 1),
     ],
     1
   )
@@ -7125,7 +7126,12 @@ var render = function () {
         1
       ),
       _vm._v(" "),
-      _c("main", [_c("router-view")], 1),
+      _c(
+        "main",
+        { staticClass: "container p-3 p-xs-0 " },
+        [_c("router-view")],
+        1
+      ),
     ],
     1
   )
@@ -7155,6 +7161,7 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c(
     "div",
+    { staticClass: "mt-6" },
     [
       _c("v-text-field", {
         attrs: { label: "Email", type: "email", required: "" },
@@ -7319,6 +7326,7 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c(
     "div",
+    { staticClass: "mt-6" },
     [
       _c("v-text-field", {
         attrs: { label: "Email", type: "email", required: "" },
@@ -7385,7 +7393,11 @@ var render = function () {
         on: { companyCreated: _vm.onCompanyCreated },
       }),
       _vm._v(" "),
-      _c("matrix", { ref: "matrix", attrs: { editable: true, "user-id": 1 } }),
+      _c("matrix", {
+        ref: "matrix",
+        staticClass: "mt-5",
+        attrs: { editable: true, "user-id": 1 },
+      }),
     ],
     1
   )

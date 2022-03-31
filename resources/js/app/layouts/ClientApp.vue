@@ -30,7 +30,7 @@
                 </v-list-item>
             </v-list>
         </v-navigation-drawer>
-        <main>
+        <main class="container p-3 p-xs-0 ">
             <router-view />
         </main>
     </div>
