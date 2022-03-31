@@ -3,13 +3,15 @@ import Router from 'vue-router'
 import Vue from 'vue'
 
 // views
-import MainPage from './views/MainPage.vue'
-import Login from './views/Login.vue'
-import AdminLogin from './views/AdminLogin.vue'
+import MainPage from './views/app/MainPage.vue'
+import Login from './views/app/Login.vue'
+import AdminLogin from './views/admin/AdminLogin.vue'
 
 // users
-import UserDetail from './views/UserDetail.vue'
-import Users from "./views/Users";
+import UserDetail from './views/admin/UserDetail.vue'
+import Users from "./views/admin/Users";
+import AdminApp from "./layouts/AdminApp";
+import ClientApp from "./layouts/ClientApp";
 
 //import NotFound from './views/NotFound.vue'
 
@@ -20,24 +22,40 @@ export default new Router({
     mode: 'history',
     routes: [
         {
+            path: '/admin',
+            component: AdminApp,
+            children: [
+                {
+                    path: 'login',
+                    component: AdminLogin
+                },
+                {
+                    path: '',
+                    redirect: '/users'
+                },
+                {
+                    path: 'users',
+                    component: Users
+                },
+                {
+                    path: 'users/:id',
+                    component: UserDetail
+                },
+            ]
+        },
+        {
             path: '/',
-            component: MainPage
-        },
-        {
-            path: '/login/',
-            component: Login
-        },
-        {
-            path: '/admin/login',
-            component: AdminLogin
-        },
-        {
-            path: '/admin/users',
-            component: Users
-        },
-        {
-            path: '/admin/users/:id',
-            component: UserDetail
+            component: ClientApp,
+            children: [
+                {
+                    path: '',
+                    component: MainPage
+                },
+                {
+                    path: 'login',
+                    component: Login
+                },
+            ]
         },
         //
         // // 404

@@ -1,15 +1,15 @@
 <template>
     <v-app>
-        <main>
-            <router-view />
-        </main>
+        <router-view></router-view>
     </v-app>
 </template>
 
 <script>
-import {VApp} from 'vuetify/lib'
-
 export default {
-    components: {VApp}
+    name: "App"
 }
 </script>
+
+<style scoped>
+
+</style>

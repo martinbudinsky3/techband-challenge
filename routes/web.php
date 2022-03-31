@@ -26,7 +26,7 @@ Route::get('admin/login', function () {
 })->name('login_admin');
 
 Route::post('login/', [LoginController::class, 'login']);
-Route::post('admin/login', [LoginController::class, 'loginAdmin']);
+Route::post('admin/login', [LoginController::class, 'adminLogin']);
 Route::post('logout', [LoginController::class, 'logout'])->middleware('auth:sanctum');
 
 Route::group(['prefix' => 'api', 'middleware' => 'auth:sanctum'], function () {
@@ -38,7 +38,7 @@ Route::group(['prefix' => 'api', 'middleware' => 'auth:sanctum'], function () {
     Route::prefix('admin')->group(function () {
         Route::prefix('users')->group(function () {
             Route::get('/', [UserController::class, 'index'])->middleware('can:administrate');
-            Route::get('{user}/', [UserController::class, 'show'])->middleware('can:show', \App\Models\User::class);
+            Route::get('{user}/', [UserController::class, 'show'])/*->middleware('can:show', '\App\Models\User')*/; // MIDDLEWARE NOT WORKING
         });
     });
 });

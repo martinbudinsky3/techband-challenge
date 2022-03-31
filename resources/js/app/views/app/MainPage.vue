@@ -7,9 +7,9 @@
 </template>
 
 <script>
-import ParameterDialogForm from "../components/ParameterDialogForm";
-import CompanyDialogForm from "../components/CompanyDialogForm";
-import Matrix from "../components/Matrix";
+import ParameterDialogForm from "../../components/ParameterDialogForm";
+import CompanyDialogForm from "../../components/CompanyDialogForm";
+import Matrix from "../../components/Matrix";
 
 export default {
     components: {

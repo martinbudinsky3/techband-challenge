@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import Matrix from "../components/Matrix";
+import Matrix from "../../components/Matrix";
 
 export default {
     components: {
