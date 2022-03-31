@@ -11,7 +11,7 @@ import AdminLogin from './views/AdminLogin.vue'
 
 // users
 //import Users from './admin/views/users/Users.vue'
-//import UserSingle from './admin/views/users/UserDetail.vue'
+import UserDetail from './views/UserDetail.vue'
 
 Vue.use(Router)
 
@@ -30,44 +30,10 @@ export default new Router({
             path: '/admin/login',
             component: AdminLogin
         },
-        //
-        // // POSTS
-        // {
-        //     path: '/admin/posts',
-        //     component: Posts
-        // },
-        // {
-        //     path: '/admin/posts/new',
-        //     component: PostCreate
-        // },
-        // {
-        //     path: '/admin/posts/:id',
-        //     component: PostSingle
-        // },
-        // {
-        //     path: '/admin/posts/:id/edit',
-        //     component: PostEdit
-        // },
-        //
-        // // COMMENTS
-        // {
-        //     path: '/admin/comments',
-        //     component: Comments
-        // },
-        // {
-        //     path: '/admin/comments/:id',
-        //     component: CommentSingle
-        // },
-        //
-        // // USERS
-        // {
-        //     path: '/admin/users',
-        //     component: Users
-        // },
-        // {
-        //     path: '/admin/users/:id',
-        //     component: UserSingle
-        // },
+        {
+            path: '/admin/users/:id',
+            component: UserDetail
+        },
         //
         // // 404
         // {

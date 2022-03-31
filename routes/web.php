@@ -45,7 +45,7 @@ Route::prefix('api')->group(function () {
 
 Route::get('admin/{any?}/', function () {
     return view('layouts.app');
-})->where('any', '.*')->middleware(['auth:sanctum', 'can:administrate'])->name('admin');
+})->where('any', '.*')->middleware(['auth:sanctum', 'admin'])->name('admin');
 
 Route::get('{any?}/', function () {
     return view('layouts.app');
