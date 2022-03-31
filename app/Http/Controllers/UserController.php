@@ -12,7 +12,8 @@ class UserController extends Controller
 {
     public function index()
     {
-        //
+        $users = User::has('parameters')->has('companies')->get();
+        return response()->json(['users' => $users]);
     }
 
     public function show(User $user)

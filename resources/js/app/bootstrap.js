@@ -21,7 +21,12 @@ window.axios.interceptors.response.use((response) => response, (error) => {
         (error.response.status === 401 || error.response.status === 419) &&
         router.currentRoute.path !== '/login'
     ) {
-        router.push({ path: '/login' })
+        if (!router.currentRoute.path.match('admin*')) {
+            router.push({ path: '/admin/login' })
+        } else {
+            router.push({ path: '/login' })
+        }
+
     } else {
         throw error
     }

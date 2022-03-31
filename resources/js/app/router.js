@@ -7,11 +7,12 @@ import MainPage from './views/MainPage.vue'
 import Login from './views/Login.vue'
 import AdminLogin from './views/AdminLogin.vue'
 
+// users
+import UserDetail from './views/UserDetail.vue'
+import Users from "./views/Users";
+
 //import NotFound from './views/NotFound.vue'
 
-// users
-//import Users from './admin/views/users/Users.vue'
-import UserDetail from './views/UserDetail.vue'
 
 Vue.use(Router)
 
@@ -29,6 +30,10 @@ export default new Router({
         {
             path: '/admin/login',
             component: AdminLogin
+        },
+        {
+            path: '/admin/users',
+            component: Users
         },
         {
             path: '/admin/users/:id',

@@ -1,5 +1,5 @@
 <template>
-    <matrix v-bind:editable="false" v-bind:user-id="this.$router.id"></matrix>
+    <matrix v-bind:editable="false" v-bind:user-id="this.$route.params.id"></matrix>
 </template>
 
 <script>
