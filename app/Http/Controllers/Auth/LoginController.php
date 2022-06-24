@@ -18,7 +18,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        // $this->middleware('guest')->except('logout');
     }
 
     public function login(Request $request)
@@ -28,7 +28,6 @@ class LoginController extends Controller
             'password' => ['required'],
         ]);
 
-        Log::debug("Login test");
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
