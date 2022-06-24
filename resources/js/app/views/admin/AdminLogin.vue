@@ -38,13 +38,14 @@ export default {
     },
     methods: {
         login() {
+            console.log("Admin logging in")
             axios.get('/sanctum/csrf-cookie').then(response => {
                 axios.post('/admin/login', {email: this.email, password: this.password})
                     .then(response => {
                         console.log(response)
                         this.$router.push('/admin/users')
                     })
-                    .catch(error => console.log(error))
+                    .catch(error => console.log(error)) // TODO show error message
             });
         },
     }

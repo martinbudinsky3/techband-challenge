@@ -2752,6 +2752,7 @@ __webpack_require__.r(__webpack_exports__);
     login: function login() {
       var _this = this;
 
+      console.log("Admin logging in");
       axios.get('/sanctum/csrf-cookie').then(function (response) {
         axios.post('/admin/login', {
           email: _this.email,
@@ -2762,7 +2763,7 @@ __webpack_require__.r(__webpack_exports__);
           _this.$router.push('/admin/users');
         })["catch"](function (error) {
           return console.log(error);
-        });
+        }); // TODO show error message
       });
     }
   }
@@ -3041,8 +3042,8 @@ window.axios.defaults.withCredentials = true;
 window.axios.interceptors.response.use(function (response) {
   return response;
 }, function (error) {
-  if (error.response && (error.response.status === 401 || error.response.status === 419) && _router__WEBPACK_IMPORTED_MODULE_1__["default"].currentRoute.path !== '/login') {
-    if (!_router__WEBPACK_IMPORTED_MODULE_1__["default"].currentRoute.path.match('admin*')) {
+  if (error.response && (error.response.status === 401 || error.response.status === 419) && !_router__WEBPACK_IMPORTED_MODULE_1__["default"].currentRoute.path.match('.*login')) {
+    if (!_router__WEBPACK_IMPORTED_MODULE_1__["default"].currentRoute.path.match('/admin.*')) {
       _router__WEBPACK_IMPORTED_MODULE_1__["default"].push({
         path: '/admin/login'
       });
