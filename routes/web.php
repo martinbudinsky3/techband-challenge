@@ -38,7 +38,7 @@ Route::group(['prefix' => 'api', 'middleware' => 'auth:sanctum'], function () {
     Route::prefix('admin')->group(function () {
         Route::prefix('users')->group(function () {
             Route::get('/', [UserController::class, 'index'])->middleware('can:administrate');
-            Route::get('{user}/', [UserController::class, 'show'])/*->middleware('can:show', '\App\Models\User')*/; // MIDDLEWARE NOT WORKING
+            Route::get('{user}/', [UserController::class, 'show'])->middleware('can:show,user');
         });
     });
 });
