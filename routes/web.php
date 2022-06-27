@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use \App\Http\Controllers\ParameterController;
 use \App\Http\Controllers\CompanyController;
 use \App\Http\Controllers\Auth\LoginController;
+use \Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +34,10 @@ Route::group(['prefix' => 'api', 'middleware' => 'auth:sanctum'], function () {
     Route::prefix('admin')->group(function () {
         Route::prefix('users')->group(function () {
             Route::get('/', [UserController::class, 'index'])->middleware('can:administrate');
+            Route::get('me/', function () {
+                \Illuminate\Support\Facades\Log::debug(Auth::id());
+                return redirect('/api/admin/users/' . Auth::id());
+            });
             Route::get('{user}/', [UserController::class, 'show'])->middleware('can:show,user');
         });
     });

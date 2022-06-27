@@ -7381,7 +7381,7 @@ var render = function () {
       _c("matrix", {
         ref: "matrix",
         staticClass: "mt-5",
-        attrs: { editable: true, "user-id": 1 },
+        attrs: { editable: true, "user-id": "me" },
       }),
     ],
     1

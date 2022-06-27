@@ -2,7 +2,7 @@
     <div>
         <parameter-dialog-form @parameterCreated="onParameterCreated"></parameter-dialog-form>
         <company-dialog-form @companyCreated="onCompanyCreated"></company-dialog-form>
-        <matrix class="mt-5" ref="matrix" v-bind:editable="true" v-bind:user-id="1"></matrix>
+        <matrix class="mt-5" ref="matrix" v-bind:editable="true" v-bind:user-id="'me'"></matrix>
     </div>
 </template>
 
