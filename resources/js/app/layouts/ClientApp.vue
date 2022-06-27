@@ -72,7 +72,7 @@ export default {
     },
     methods: {
         logout() {
-            axios.post('/logout')
+            axios.post('/api/logout')
                 .then(response => this.$router.push('/login'))
                 .catch(error => console.log(error))
         }

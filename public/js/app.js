@@ -2255,7 +2255,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
   mounted: function mounted() {
     var _this = this;
 
-    axios.get("/api/admin/users/".concat(this.userId)).then(function (response) {
+    axios.get("/api/users/".concat(this.userId)).then(function (response) {
       var companiesFromApi = response.data.companies;
 
       var _iterator = _createForOfIteratorHelper(companiesFromApi),
@@ -2598,7 +2598,7 @@ __webpack_require__.r(__webpack_exports__);
     logout: function logout() {
       var _this = this;
 
-      axios.post('/logout').then(function (response) {
+      axios.post('/api/logout').then(function (response) {
         return _this.$router.push('/login');
       })["catch"](function (error) {
         return console.log(error);
@@ -2692,7 +2692,7 @@ __webpack_require__.r(__webpack_exports__);
     logout: function logout() {
       var _this = this;
 
-      axios.post('/logout').then(function (response) {
+      axios.post('/api/logout').then(function (response) {
         return _this.$router.push('/login');
       })["catch"](function (error) {
         return console.log(error);
@@ -2923,7 +2923,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.get('/sanctum/csrf-cookie').then(function (response) {
-        axios.post('/login', {
+        axios.post('/api/login', {
           email: _this.email,
           password: _this.password
         }).then(function (response) {

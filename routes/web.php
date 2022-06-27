@@ -22,24 +22,25 @@ Route::get('login/', function () {
     return view('layouts.app');
 })->name('login');
 
-Route::post('login/', [LoginController::class, 'login']);
-Route::post('logout/', [LoginController::class, 'logout'])->middleware('auth:sanctum');
+Route::prefix('api')->group(function () {
+    Route::post('login/', [LoginController::class, 'login']);
 
-Route::group(['prefix' => 'api', 'middleware' => 'auth:sanctum'], function () {
-    Route::post('parameters/', [ParameterController::class, 'store']);
-    Route::post('companies/', [CompanyController::class, 'store']);
-    Route::post('parameters/{parameter}/companies/{company}', [ParameterController::class, 'storeCompanyRelation']);
-    Route::delete('parameters/{parameter}/companies/{company}', [ParameterController::class, 'deleteCompanyRelation']);
+    Route::group(['middleware' => 'auth:sanctum'], function () {
+        Route::post('logout/', [LoginController::class, 'logout']);
 
-    Route::prefix('admin')->group(function () {
+        Route::post('parameters/', [ParameterController::class, 'store']);
+        Route::post('companies/', [CompanyController::class, 'store']);
+        Route::post('parameters/{parameter}/companies/{company}', [ParameterController::class, 'storeCompanyRelation']);
+        Route::delete('parameters/{parameter}/companies/{company}', [ParameterController::class, 'deleteCompanyRelation']);
+
         Route::prefix('users')->group(function () {
-            Route::get('/', [UserController::class, 'index'])->middleware('can:administrate');
             Route::get('me/', function () {
-                \Illuminate\Support\Facades\Log::debug(Auth::id());
-                return redirect('/api/admin/users/' . Auth::id());
+                return redirect('/api/users/' . Auth::id());
             });
             Route::get('{user}/', [UserController::class, 'show'])->middleware('can:show,user');
         });
+
+        Route::get('admin/users/', [UserController::class, 'index'])->middleware('can:administrate');
     });
 });
 

@@ -39,7 +39,7 @@ export default {
     methods: {
         login() {
             axios.get('/sanctum/csrf-cookie').then(response => {
-                axios.post('/login', {email: this.email, password: this.password})
+                axios.post('/api/login', {email: this.email, password: this.password})
                     .then(response => {
                         console.log(response)
                         let user = response.data

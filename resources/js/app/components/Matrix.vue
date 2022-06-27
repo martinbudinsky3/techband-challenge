@@ -66,7 +66,7 @@ export default {
         }
     },
     mounted() {
-        axios.get(`/api/admin/users/${this.userId}`)
+        axios.get(`/api/users/${this.userId}`)
             .then(response => {
                 let companiesFromApi = response.data.companies
                 for (let company of companiesFromApi) {
