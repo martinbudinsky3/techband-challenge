@@ -2306,7 +2306,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       }).then(function (response) {
         company['value'] = response.data.id;
 
-        _this3.companies.push(company);
+        _this3.companies.push(company); // TODO fix - new company is rendered twice
+
 
         _this3.calculateMatch();
       })["catch"](function (error) {
@@ -2927,8 +2928,10 @@ __webpack_require__.r(__webpack_exports__);
           password: _this.password
         }).then(function (response) {
           console.log(response);
+          var user = response.data;
+          var route = user.is_admin ? '/admin' : '/';
 
-          _this.$router.push('/');
+          _this.$router.push(route);
         })["catch"](function (error) {
           return console.log(error);
         });
@@ -3042,33 +3045,14 @@ window.axios.defaults.withCredentials = true;
 window.axios.interceptors.response.use(function (response) {
   return response;
 }, function (error) {
-  if (error.response && (error.response.status === 401 || error.response.status === 419) && !_router__WEBPACK_IMPORTED_MODULE_1__["default"].currentRoute.path.match('.*login')) {
-    if (!_router__WEBPACK_IMPORTED_MODULE_1__["default"].currentRoute.path.match('/admin.*')) {
-      _router__WEBPACK_IMPORTED_MODULE_1__["default"].push({
-        path: '/admin/login'
-      });
-    } else {
-      _router__WEBPACK_IMPORTED_MODULE_1__["default"].push({
-        path: '/login'
-      });
-    }
+  if (error.response && (error.response.status === 401 || error.response.status === 419) && _router__WEBPACK_IMPORTED_MODULE_1__["default"].currentRoute.path !== '/login') {
+    _router__WEBPACK_IMPORTED_MODULE_1__["default"].push({
+      path: '/login'
+    });
   } else {
     throw error;
   }
 });
-/**
- * Next we will register the CSRF Token as a common header with Axios so that
- * all outgoing HTTP requests automatically have it attached. This is just
- * a simple convenience so we don't have to attach every token manually.
- */
-
-var token = document.head.querySelector('meta[name="csrf-token"]');
-
-if (token) {
-  window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
-} else {
-  console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
-}
 
 /***/ }),
 
@@ -3116,7 +3100,7 @@ vue__WEBPACK_IMPORTED_MODULE_7__["default"].use(vue_router__WEBPACK_IMPORTED_MOD
       component: _views_admin_AdminLogin_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
     }, {
       path: '',
-      redirect: '/users'
+      redirect: 'users'
     }, {
       path: 'users',
       component: _views_admin_Users__WEBPACK_IMPORTED_MODULE_4__["default"]

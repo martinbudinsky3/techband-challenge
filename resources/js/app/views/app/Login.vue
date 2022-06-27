@@ -42,7 +42,9 @@ export default {
                 axios.post('/login', {email: this.email, password: this.password})
                     .then(response => {
                         console.log(response)
-                        this.$router.push('/')
+                        let user = response.data
+                        let route = user.is_admin ? '/admin' : '/'
+                        this.$router.push(route)
                     })
                     .catch(error => console.log(error))
             });

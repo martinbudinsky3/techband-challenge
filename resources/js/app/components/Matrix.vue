@@ -94,7 +94,7 @@ export default {
             axios.post('/api/companies', {'name': company.text})
                 .then(response => {
                     company['value'] = response.data.id
-                    this.companies.push(company)
+                    this.companies.push(company) // TODO fix - new company is rendered twice
                     this.calculateMatch()
                 })
                 .catch(error => {

@@ -21,13 +21,8 @@ Route::get('login/', function () {
     return view('layouts.app');
 })->name('login');
 
-Route::get('admin/login', function () {
-    return view('layouts.app');
-})->name('login_admin');
-
 Route::post('login/', [LoginController::class, 'login']);
-Route::post('admin/login', [LoginController::class, 'adminLogin']);
-Route::post('logout', [LoginController::class, 'logout'])->middleware('auth:sanctum');
+Route::post('logout/', [LoginController::class, 'logout'])->middleware('auth:sanctum');
 
 Route::group(['prefix' => 'api', 'middleware' => 'auth:sanctum'], function () {
     Route::post('parameters/', [ParameterController::class, 'store']);
@@ -45,7 +40,7 @@ Route::group(['prefix' => 'api', 'middleware' => 'auth:sanctum'], function () {
 
 Route::get('admin/{any?}/', function () {
     return view('layouts.app');
-})->where('any', '.*')->middleware(['auth:sanctum', 'admin']);
+})->where('any', '.*')->middleware(['auth:sanctum', 'can:administrate']);
 
 Route::get('{any?}/', function () {
     return view('layouts.app');

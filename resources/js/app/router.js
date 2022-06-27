@@ -31,7 +31,7 @@ export default new Router({
                 },
                 {
                     path: '',
-                    redirect: '/users'
+                    redirect: 'users'
                 },
                 {
                     path: 'users',

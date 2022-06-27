@@ -18,7 +18,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        // $this->middleware('guest')->except('logout');
+        $this->middleware('guest')->except('logout');
     }
 
     public function login(Request $request)
@@ -31,23 +31,7 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            return response()->json(null, 204);
-        }
-
-        return response()->json(['message' => 'Invalid credentials'], 401);
-    }
-
-    public function adminLogin(Request $request)
-    {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
-
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'is_admin' => true])) {
-            $request->session()->regenerate();
-
-            return response()->json(null, 204);
+            return response()->json(Auth::user());
         }
 
         return response()->json(['message' => 'Invalid credentials'], 401);

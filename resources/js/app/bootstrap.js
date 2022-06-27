@@ -19,31 +19,10 @@ window.axios.interceptors.response.use((response) => response, (error) => {
     if (
         error.response &&
         (error.response.status === 401 || error.response.status === 419) &&
-        !router.currentRoute.path.match('.*login')
+        router.currentRoute.path !== '/login'
     ) {
-        if (!router.currentRoute.path.match('/admin.*')) {
-            router.push({ path: '/admin/login' })
-        } else {
-            router.push({ path: '/login' })
-        }
-
+        router.push({ path: '/login' })
     } else {
         throw error
     }
 })
-
-/**
- * Next we will register the CSRF Token as a common header with Axios so that
- * all outgoing HTTP requests automatically have it attached. This is just
- * a simple convenience so we don't have to attach every token manually.
- */
-
-let token = document.head.querySelector('meta[name="csrf-token"]')
-
-if (token) {
-    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content
-} else {
-    console.error(
-        'CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token'
-    )
-}
