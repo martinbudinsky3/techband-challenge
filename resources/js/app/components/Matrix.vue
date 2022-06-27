@@ -93,15 +93,14 @@ export default {
         onCompanyCreated(company) {
             axios.post('/api/companies', {'name': company.text})
                 .then(response => {
-                    company['value'] = response.data.id
-                    this.companies.push(company) // TODO fix - new company is rendered twice
-                    this.calculateMatch()
+                    let companyId = response.data.id
+                    company['value'] = companyId
+                    this.companies.push(company)
+                    this.footer[companyId] = '0 %'
                 })
                 .catch(error => {
                     console.log(error)
                 })
-            this.companies.push(company)
-            this.calculateMatch()
         },
         onTableCellClick(row, col) {
             if (!this.editable || col === 'parameter' || col === 'coefficient' || 'isFooter' in row) {
@@ -127,7 +126,7 @@ export default {
         calculateMatch() {
             let coefficientsSum = this.parameters.reduce((partialSum, param) => partialSum + parseFloat(param.coefficient), 0)
             this.maxMatchId = -1
-            let maxScore = -1
+            let maxScore = 0
 
             for (let company of this.companies) {
                 let companyId = company.value
@@ -137,7 +136,6 @@ export default {
                         companyScore += parseFloat(parameter.coefficient)
                     }
                 }
-                console.log(companyScore)
                 let matchInPercent = (companyScore / coefficientsSum) * 100
                 this.footer[companyId] = `${Math.round(matchInPercent * 100) / 100} %`
 

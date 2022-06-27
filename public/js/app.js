@@ -2304,17 +2304,15 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       axios.post('/api/companies', {
         'name': company.text
       }).then(function (response) {
-        company['value'] = response.data.id;
+        var companyId = response.data.id;
+        company['value'] = companyId;
 
-        _this3.companies.push(company); // TODO fix - new company is rendered twice
+        _this3.companies.push(company);
 
-
-        _this3.calculateMatch();
+        _this3.footer[companyId] = '0 %';
       })["catch"](function (error) {
         console.log(error);
       });
-      this.companies.push(company);
-      this.calculateMatch();
     },
     onTableCellClick: function onTableCellClick(row, col) {
       if (!this.editable || col === 'parameter' || col === 'coefficient' || 'isFooter' in row) {
@@ -2342,7 +2340,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         return partialSum + parseFloat(param.coefficient);
       }, 0);
       this.maxMatchId = -1;
-      var maxScore = -1;
+      var maxScore = 0;
 
       var _iterator2 = _createForOfIteratorHelper(this.companies),
           _step2;
@@ -2370,7 +2368,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
             _iterator3.f();
           }
 
-          console.log(companyScore);
           var matchInPercent = companyScore / coefficientsSum * 100;
           this.footer[companyId] = "".concat(Math.round(matchInPercent * 100) / 100, " %");
 
