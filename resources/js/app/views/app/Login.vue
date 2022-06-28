@@ -16,6 +16,9 @@
                dark @click="login">
             Prihlásiť sa
         </v-btn>
+        <div class="mt-4">
+            <a class="black--text" href="/register">Registrácia</a>
+        </div>
     </div>
 </template>
 

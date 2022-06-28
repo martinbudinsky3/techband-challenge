@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-app-bar
-            v-if="$router.currentRoute.path !== '/login'"
+            v-if="!['/login', '/register'].includes($router.currentRoute.path)"
             color="primary"
             dark
         >

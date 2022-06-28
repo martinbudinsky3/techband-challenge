@@ -12,6 +12,7 @@ import UserDetail from './views/admin/UserDetail.vue'
 import Users from "./views/admin/Users";
 import AdminApp from "./layouts/AdminApp";
 import ClientApp from "./layouts/ClientApp";
+import Registration from "./views/app/Registration";
 
 //import NotFound from './views/NotFound.vue'
 
@@ -25,10 +26,6 @@ export default new Router({
             path: '/admin',
             component: AdminApp,
             children: [
-                {
-                    path: 'login',
-                    component: AdminLogin
-                },
                 {
                     path: '',
                     redirect: 'users'
@@ -54,6 +51,10 @@ export default new Router({
                 {
                     path: 'login',
                     component: Login
+                },
+                {
+                    path: 'register',
+                    component: Registration
                 },
             ]
         },

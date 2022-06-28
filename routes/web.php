@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use \App\Http\Controllers\ParameterController;
 use \App\Http\Controllers\CompanyController;
 use \App\Http\Controllers\Auth\LoginController;
+use \App\Http\Controllers\Auth\RegisterController;
 use \Illuminate\Support\Facades\Auth;
 
 /*
@@ -22,8 +23,13 @@ Route::get('login/', function () {
     return view('layouts.app');
 })->name('login');
 
+Route::get('register/', function () {
+    return view('layouts.app');
+});
+
 Route::prefix('api')->group(function () {
     Route::post('login/', [LoginController::class, 'login']);
+    Route::post('register/', [RegisterController::class, 'register']);
 
     Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::post('logout/', [LoginController::class, 'logout']);
