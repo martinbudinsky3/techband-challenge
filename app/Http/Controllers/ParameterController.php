@@ -11,6 +11,11 @@ class ParameterController extends Controller
 {
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => ['required', 'string'],
+            'coefficient' => ['required', 'numeric', 'between:0,1'],
+        ]);
+
         $parameter = new Parameter();
 
         $parameter->fill($request->all());

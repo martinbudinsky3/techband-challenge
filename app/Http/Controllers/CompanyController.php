@@ -11,6 +11,10 @@ class CompanyController extends Controller
 {
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => ['required', 'string']
+        ]);
+
         $company = new Company();
 
         $company->fill($request->all());

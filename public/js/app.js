@@ -2906,6 +2906,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -2915,7 +2917,9 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       email: '',
-      password: ''
+      password: '',
+      loginError: false,
+      loginErrorMessage: 'Incorrect credentials'
     };
   },
   methods: {
@@ -2933,7 +2937,11 @@ __webpack_require__.r(__webpack_exports__);
 
           _this.$router.push(route);
         })["catch"](function (error) {
-          return console.log(error);
+          if ([401, 422].includes(error.response.status)) {
+            _this.loginError = true;
+          }
+
+          console.log(error);
         });
       });
     }
@@ -3039,6 +3047,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -3050,13 +3063,17 @@ __webpack_require__.r(__webpack_exports__);
       name: '',
       email: '',
       password: '',
-      passwordConfirmation: ''
+      passwordConfirmation: '',
+      nameErrorMessage: '',
+      emailErrorMessage: '',
+      passwordErrorMessage: ''
     };
   },
   methods: {
     register: function register() {
       var _this = this;
 
+      this.hideErrors();
       axios.get('/sanctum/csrf-cookie').then(function (response) {
         axios.post('/api/register', {
           name: _this.name,
@@ -3070,9 +3087,31 @@ __webpack_require__.r(__webpack_exports__);
 
           _this.$router.push(route);
         })["catch"](function (error) {
-          return console.log(error.response.data);
+          if (error.response.data.errors) {
+            _this.showErrors(error.response.data.errors);
+          }
+
+          console.log(error);
         });
       });
+    },
+    hideErrors: function hideErrors() {
+      this.nameErrorMessage = '';
+      this.emailErrorMessage = '';
+      this.passwordErrorMessage = '';
+    },
+    showErrors: function showErrors(errors) {
+      if (errors.name) {
+        this.nameErrorMessage = errors.name;
+      }
+
+      if (errors.email) {
+        this.emailErrorMessage = errors.email;
+      }
+
+      if (errors.password) {
+        this.passwordErrorMessage = errors.password;
+      }
     }
   }
 });
@@ -7026,7 +7065,7 @@ var render = function () {
               _vm._v(" "),
               _c("v-text-field", {
                 attrs: {
-                  label: "Koeficient *",
+                  label: "Koeficient (hodnota medzi 0 a 1) *",
                   type: "number",
                   step: "0.1",
                   required: "",
@@ -7493,7 +7532,12 @@ var render = function () {
       }),
       _vm._v(" "),
       _c("v-text-field", {
-        attrs: { label: "Heslo", type: "password", required: "" },
+        attrs: {
+          label: "Heslo",
+          type: "password",
+          "error-messages": _vm.loginError ? _vm.loginErrorMessage : "",
+          required: "",
+        },
         model: {
           value: _vm.password,
           callback: function ($$v) {
@@ -7505,7 +7549,11 @@ var render = function () {
       _vm._v(" "),
       _c(
         "v-btn",
-        { attrs: { color: "primary", dark: "" }, on: { click: _vm.login } },
+        {
+          staticClass: "mt-2",
+          attrs: { color: "primary", dark: "" },
+          on: { click: _vm.login },
+        },
         [_vm._v("\n        Prihlásiť sa\n    ")]
       ),
       _vm._v(" "),
@@ -7602,6 +7650,7 @@ var render = function () {
       _c(
         "v-form",
         {
+          attrs: { "lazy-validation": "" },
           on: {
             submit: function ($event) {
               $event.preventDefault()
@@ -7611,7 +7660,12 @@ var render = function () {
         },
         [
           _c("v-text-field", {
-            attrs: { label: "Name *", type: "text", required: "" },
+            attrs: {
+              label: "Name *",
+              type: "text",
+              "error-messages": _vm.nameErrorMessage,
+              required: "",
+            },
             model: {
               value: _vm.name,
               callback: function ($$v) {
@@ -7622,7 +7676,12 @@ var render = function () {
           }),
           _vm._v(" "),
           _c("v-text-field", {
-            attrs: { label: "Email *", type: "email", required: "" },
+            attrs: {
+              label: "Email *",
+              type: "email",
+              "error-messages": _vm.emailErrorMessage,
+              required: "",
+            },
             model: {
               value: _vm.email,
               callback: function ($$v) {
@@ -7633,7 +7692,12 @@ var render = function () {
           }),
           _vm._v(" "),
           _c("v-text-field", {
-            attrs: { label: "Password *", type: "password", required: "" },
+            attrs: {
+              label: "Password *",
+              type: "password",
+              "error-messages": _vm.passwordErrorMessage,
+              required: "",
+            },
             model: {
               value: _vm.password,
               callback: function ($$v) {

@@ -10,9 +10,11 @@
             v-model="password"
             label="Heslo"
             type="password"
+            :error-messages="loginError ? loginErrorMessage : ''"
             required
         ></v-text-field>
         <v-btn color="primary"
+               class="mt-2"
                dark @click="login">
             Prihlásiť sa
         </v-btn>
@@ -37,6 +39,9 @@ export default {
         return {
             email: '',
             password: '',
+
+            loginError: false,
+            loginErrorMessage: 'Incorrect credentials'
         }
     },
     methods: {
@@ -49,7 +54,12 @@ export default {
                         let route = user.is_admin ? '/admin' : '/'
                         this.$router.push(route)
                     })
-                    .catch(error => console.log(error))
+                    .catch(error => {
+                        if ([401, 422].includes(error.response.status)) {
+                            this.loginError = true
+                        }
+                        console.log(error)
+                    })
             });
         },
     }

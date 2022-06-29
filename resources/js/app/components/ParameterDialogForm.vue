@@ -26,7 +26,7 @@
 
                 <v-text-field
                     v-model="coefficient"
-                    label="Koeficient *"
+                    label="Koeficient (hodnota medzi 0 a 1) *"
                     type="number"
                     step="0.1"
                     required
