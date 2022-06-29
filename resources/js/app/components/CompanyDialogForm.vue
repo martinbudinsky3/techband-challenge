@@ -21,6 +21,7 @@
                 <v-text-field
                     v-model="name"
                     label="Názov *"
+                    :error-messages="nameErrorMessage"
                     required
                 ></v-text-field>
                 <small>* pole je povinné</small>
@@ -73,6 +74,8 @@ export default {
         return {
             dialog: false,
             name: '',
+
+            nameErrorMessage: ''
         }
     },
     methods: {
@@ -81,6 +84,29 @@ export default {
             this.$emit('companyCreated', {value: 4, text: this.name})
 
             this.name = ''
+        },
+
+        onParameterSuccessfullyCreated() {
+            this.dialog = false
+
+            this.name = ''
+        },
+
+        onParameterCreatedError(error) {
+            console.log(error)
+            if (error.response.data.errors) {
+                this.showErrors(error.response.data.errors)
+            }
+        },
+
+        hideErrors () {
+            this.nameErrorMessage = ''
+        },
+
+        showErrors(errors) {
+            if (errors.name) {
+                this.nameErrorMessage = errors.name
+            }
         }
     }
 }

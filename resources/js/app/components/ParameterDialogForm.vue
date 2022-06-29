@@ -18,9 +18,13 @@
                 <span class="text-h5">Nový parameter</span>
             </v-card-title>
             <v-card-text>
+                <div class="d-block mb-4">
+                    <small class="grey--text">* field is required</small>
+                </div>
                 <v-text-field
                     v-model="name"
                     label="Názov *"
+                    :error-messages="nameErrorMessage"
                     required
                 ></v-text-field>
 
@@ -29,9 +33,9 @@
                     label="Koeficient (hodnota medzi 0 a 1) *"
                     type="number"
                     step="0.1"
+                    :error-messages="coefficientErrorMessage"
                     required
                 ></v-text-field>
-                <small>* pole je povinné</small>
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
@@ -82,18 +86,48 @@ export default {
             dialog: false,
             name: '',
             coefficient: 0,
+
+            nameErrorMessage: '',
+            coefficientErrorMessage: ''
         }
     },
     methods: {
-        addParameter(event) {
-            this.dialog = false
+        addParameter() {
+            this.hideErrors()
+
             this.$emit('parameterCreated', {
                 name: this.name,
                 coefficient: this.coefficient,
             })
+        },
+
+        onParameterSuccessfullyCreated() {
+            this.dialog = false
 
             this.name = ''
             this.coefficient = 0
+        },
+
+        onParameterCreatedError(error) {
+            console.log(error)
+            if (error.response.data.errors) {
+                this.showErrors(error.response.data.errors)
+            }
+        },
+
+        hideErrors () {
+            this.nameErrorMessage = ''
+            this.coefficientErrorMessage = ''
+        },
+
+        showErrors(errors) {
+            if (errors.name) {
+                this.nameErrorMessage = errors.name
+            }
+
+            if (errors.coefficient) {
+                this.coefficientErrorMessage = errors.coefficient
+            }
         }
     }
 }

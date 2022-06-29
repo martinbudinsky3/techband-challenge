@@ -1,7 +1,7 @@
 <template>
     <div>
-        <parameter-dialog-form @parameterCreated="onParameterCreated"></parameter-dialog-form>
-        <company-dialog-form @companyCreated="onCompanyCreated"></company-dialog-form>
+        <parameter-dialog-form ref="parameter-form" @parameterCreated="onParameterCreated"></parameter-dialog-form>
+        <company-dialog-form ref="company-form" @companyCreated="onCompanyCreated"></company-dialog-form>
         <matrix class="mt-5" ref="matrix" v-bind:editable="true" v-bind:user-id="'me'"></matrix>
     </div>
 </template>
@@ -20,10 +20,25 @@ export default {
 
     methods: {
         onParameterCreated(parameter) {
-            this.$refs.matrix.onParameterCreated(parameter)
+            axios.post('/api/parameters', parameter)
+                .then(response => {
+                    parameter['id'] = response.data.id
+                    this.$refs.matrix.onParameterCreated(parameter)
+                    this.$refs["parameter-form"].onParameterSuccessfullyCreated()
+                })
+                .catch(error => {
+                    this.$refs["parameter-form"].onParameterCreatedError(error)
+                })
         },
         onCompanyCreated(company) {
-            this.$refs.matrix.onCompanyCreated(company)
+            axios.post('/api/companies', {'name': company.text})
+                .then(response => {
+                    this.$refs.matrix.onCompanyCreated(company, response.data.id)
+                    this.$refs["company-form"].onCompanySuccessfullyCreated()
+                })
+                .catch(error => {
+                    this.$refs["company-form"].onCompanyCreatedError(error)
+                })
         },
     }
 }

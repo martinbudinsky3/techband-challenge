@@ -2142,6 +2142,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -2157,7 +2158,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       dialog: false,
-      name: ''
+      name: '',
+      nameErrorMessage: ''
     };
   },
   methods: {
@@ -2168,6 +2170,25 @@ __webpack_require__.r(__webpack_exports__);
         text: this.name
       });
       this.name = '';
+    },
+    onParameterSuccessfullyCreated: function onParameterSuccessfullyCreated() {
+      this.dialog = false;
+      this.name = '';
+    },
+    onParameterCreatedError: function onParameterCreatedError(error) {
+      console.log(error);
+
+      if (error.response.data.errors) {
+        this.showErrors(error.response.data.errors);
+      }
+    },
+    hideErrors: function hideErrors() {
+      this.nameErrorMessage = '';
+    },
+    showErrors: function showErrors(errors) {
+      if (errors.name) {
+        this.nameErrorMessage = errors.name;
+      }
     }
   }
 });
@@ -2285,34 +2306,14 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
   },
   methods: {
     onParameterCreated: function onParameterCreated(parameter) {
-      var _this2 = this;
-
-      axios.post('/api/parameters', parameter).then(function (response) {
-        parameter['id'] = response.data.id;
-        parameter['companies'] = [];
-
-        _this2.parameters.push(parameter);
-
-        _this2.calculateMatch();
-      })["catch"](function (error) {
-        console.log(error);
-      });
+      parameter['companies'] = [];
+      this.parameters.push(parameter);
+      this.calculateMatch();
     },
-    onCompanyCreated: function onCompanyCreated(company) {
-      var _this3 = this;
-
-      axios.post('/api/companies', {
-        'name': company.text
-      }).then(function (response) {
-        var companyId = response.data.id;
-        company['value'] = companyId;
-
-        _this3.companies.push(company);
-
-        _this3.footer[companyId] = '0 %';
-      })["catch"](function (error) {
-        console.log(error);
-      });
+    onCompanyCreated: function onCompanyCreated(company, companyId) {
+      company['value'] = companyId;
+      this.companies.push(company);
+      this.footer[companyId] = '0 %';
     },
     onTableCellClick: function onTableCellClick(row, col) {
       if (!this.editable || col === 'parameter' || col === 'coefficient' || 'isFooter' in row) {
@@ -2468,6 +2469,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -2484,18 +2489,43 @@ __webpack_require__.r(__webpack_exports__);
     return {
       dialog: false,
       name: '',
-      coefficient: 0
+      coefficient: 0,
+      nameErrorMessage: '',
+      coefficientErrorMessage: ''
     };
   },
   methods: {
-    addParameter: function addParameter(event) {
-      this.dialog = false;
+    addParameter: function addParameter() {
+      this.hideErrors();
       this.$emit('parameterCreated', {
         name: this.name,
         coefficient: this.coefficient
       });
+    },
+    onParameterSuccessfullyCreated: function onParameterSuccessfullyCreated() {
+      this.dialog = false;
       this.name = '';
       this.coefficient = 0;
+    },
+    onParameterCreatedError: function onParameterCreatedError(error) {
+      console.log(error);
+
+      if (error.response.data.errors) {
+        this.showErrors(error.response.data.errors);
+      }
+    },
+    hideErrors: function hideErrors() {
+      this.nameErrorMessage = '';
+      this.coefficientErrorMessage = '';
+    },
+    showErrors: function showErrors(errors) {
+      if (errors.name) {
+        this.nameErrorMessage = errors.name;
+      }
+
+      if (errors.coefficient) {
+        this.coefficientErrorMessage = errors.coefficient;
+      }
     }
   }
 });
@@ -2983,10 +3013,30 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     onParameterCreated: function onParameterCreated(parameter) {
-      this.$refs.matrix.onParameterCreated(parameter);
+      var _this = this;
+
+      axios.post('/api/parameters', parameter).then(function (response) {
+        parameter['id'] = response.data.id;
+
+        _this.$refs.matrix.onParameterCreated(parameter);
+
+        _this.$refs["parameter-form"].onParameterSuccessfullyCreated();
+      })["catch"](function (error) {
+        _this.$refs["parameter-form"].onParameterCreatedError(error);
+      });
     },
     onCompanyCreated: function onCompanyCreated(company) {
-      this.$refs.matrix.onCompanyCreated(company);
+      var _this2 = this;
+
+      axios.post('/api/companies', {
+        'name': company.text
+      }).then(function (response) {
+        _this2.$refs.matrix.onCompanyCreated(company, response.data.id);
+
+        _this2.$refs["company-form"].onCompanySuccessfullyCreated();
+      })["catch"](function (error) {
+        _this2.$refs["company-form"].onCompanyCreatedError(error);
+      });
     }
   }
 });
@@ -6836,7 +6886,11 @@ var render = function () {
             "v-card-text",
             [
               _c("v-text-field", {
-                attrs: { label: "Názov *", required: "" },
+                attrs: {
+                  label: "Názov *",
+                  "error-messages": _vm.nameErrorMessage,
+                  required: "",
+                },
                 model: {
                   value: _vm.name,
                   callback: function ($$v) {
@@ -7052,8 +7106,18 @@ var render = function () {
           _c(
             "v-card-text",
             [
+              _c("div", { staticClass: "d-block mb-4" }, [
+                _c("small", { staticClass: "grey--text" }, [
+                  _vm._v("* field is required"),
+                ]),
+              ]),
+              _vm._v(" "),
               _c("v-text-field", {
-                attrs: { label: "Názov *", required: "" },
+                attrs: {
+                  label: "Názov *",
+                  "error-messages": _vm.nameErrorMessage,
+                  required: "",
+                },
                 model: {
                   value: _vm.name,
                   callback: function ($$v) {
@@ -7068,6 +7132,7 @@ var render = function () {
                   label: "Koeficient (hodnota medzi 0 a 1) *",
                   type: "number",
                   step: "0.1",
+                  "error-messages": _vm.coefficientErrorMessage,
                   required: "",
                 },
                 model: {
@@ -7078,8 +7143,6 @@ var render = function () {
                   expression: "coefficient",
                 },
               }),
-              _vm._v(" "),
-              _c("small", [_vm._v("* pole je povinné")]),
             ],
             1
           ),
@@ -7600,10 +7663,12 @@ var render = function () {
     "div",
     [
       _c("parameter-dialog-form", {
+        ref: "parameter-form",
         on: { parameterCreated: _vm.onParameterCreated },
       }),
       _vm._v(" "),
       _c("company-dialog-form", {
+        ref: "company-form",
         on: { companyCreated: _vm.onCompanyCreated },
       }),
       _vm._v(" "),

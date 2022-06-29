@@ -79,28 +79,14 @@ export default {
     },
     methods: {
         onParameterCreated(parameter) {
-            axios.post('/api/parameters', parameter)
-                .then(response => {
-                    parameter['id'] = response.data.id
-                    parameter['companies'] = []
-                    this.parameters.push(parameter)
-                    this.calculateMatch()
-                })
-                .catch(error => {
-                    console.log(error)
-                })
+            parameter['companies'] = []
+            this.parameters.push(parameter)
+            this.calculateMatch()
         },
-        onCompanyCreated(company) {
-            axios.post('/api/companies', {'name': company.text})
-                .then(response => {
-                    let companyId = response.data.id
-                    company['value'] = companyId
-                    this.companies.push(company)
-                    this.footer[companyId] = '0 %'
-                })
-                .catch(error => {
-                    console.log(error)
-                })
+        onCompanyCreated(company, companyId) {
+            company['value'] = companyId
+            this.companies.push(company)
+            this.footer[companyId] = '0 %'
         },
         onTableCellClick(row, col) {
             if (!this.editable || col === 'parameter' || col === 'coefficient' || 'isFooter' in row) {
