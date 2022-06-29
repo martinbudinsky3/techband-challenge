@@ -79,20 +79,19 @@ export default {
         }
     },
     methods: {
-        addCompany(event) {
-            this.dialog = false
+        addCompany() {
             this.$emit('companyCreated', {value: 4, text: this.name})
 
             this.name = ''
         },
 
-        onParameterSuccessfullyCreated() {
+        onCompanySuccessfullyCreated() {
             this.dialog = false
 
             this.name = ''
         },
 
-        onParameterCreatedError(error) {
+        onCompanyCreatedError(error) {
             console.log(error)
             if (error.response.data.errors) {
                 this.showErrors(error.response.data.errors)

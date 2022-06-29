@@ -2163,19 +2163,18 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    addCompany: function addCompany(event) {
-      this.dialog = false;
+    addCompany: function addCompany() {
       this.$emit('companyCreated', {
         value: 4,
         text: this.name
       });
       this.name = '';
     },
-    onParameterSuccessfullyCreated: function onParameterSuccessfullyCreated() {
+    onCompanySuccessfullyCreated: function onCompanySuccessfullyCreated() {
       this.dialog = false;
       this.name = '';
     },
-    onParameterCreatedError: function onParameterCreatedError(error) {
+    onCompanyCreatedError: function onCompanyCreatedError(error) {
       console.log(error);
 
       if (error.response.data.errors) {
