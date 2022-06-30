@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-6">
+    <div class="mt-6 mx-auto form-wrapper">
         <h1 class="mb-6 text-center">Registration</h1>
         <div class="d-block mb-4">
             <small class="grey--text">* field is required</small>
@@ -34,13 +34,14 @@
                 type="password"
                 required
             ></v-text-field>
-            <v-btn color="primary"
-                   type="submit"
-                   dark>
-                Register
+            <v-btn class="responsive-btn small-btn"
+                    color="primary"
+                    type="submit"
+                    dark>
+                Sign Up
             </v-btn>
         </v-form>
-        <div class="mt-4">
+        <div class="mt-4 responsive-action-text">
             Already have an account? <a href="/login">Log In</a>
         </div>
 

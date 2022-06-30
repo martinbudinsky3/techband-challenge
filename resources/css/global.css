@@ -1,0 +1,21 @@
+@media (max-width: 599px) {
+    .responsive-btn {
+        width: 100%
+    }
+
+    .responsive-action-text {
+        text-align: center
+    }
+}
+
+@media (min-width: 600px) {
+    .small-btn {
+        width: 160px;
+    }
+}
+
+.form-wrapper {
+    max-width: 800px;
+}
+
+
