@@ -8,7 +8,7 @@
         ></v-text-field>
         <v-text-field
             v-model="password"
-            label="Heslo"
+            label="Password"
             type="password"
             :error-messages="loginError ? loginErrorMessage : ''"
             required
@@ -16,10 +16,10 @@
         <v-btn color="primary"
                class="mt-2"
                dark @click="login">
-            Prihlásiť sa
+            Log In
         </v-btn>
         <div class="mt-4">
-            <a class="black--text" href="/register">Registrácia</a>
+            New? <a href="/register">Sign Up</a>
         </div>
     </div>
 </template>

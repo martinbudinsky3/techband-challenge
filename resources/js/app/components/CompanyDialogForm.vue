@@ -10,21 +10,21 @@
                 v-bind="attrs"
                 v-on="on"
             >
-                Pridať spoločnosť
+                Add company
             </v-btn>
         </template>
         <v-card>
             <v-card-title>
-                <span class="text-h5">Nová spoločnosť</span>
+                <span class="text-h5">New company</span>
             </v-card-title>
             <v-card-text>
                 <v-text-field
                     v-model="name"
-                    label="Názov *"
+                    label="Name *"
                     :error-messages="nameErrorMessage"
                     required
                 ></v-text-field>
-                <small>* pole je povinné</small>
+                <small>* field is required</small>
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>

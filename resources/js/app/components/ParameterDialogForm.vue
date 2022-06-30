@@ -10,12 +10,12 @@
                 v-bind="attrs"
                 v-on="on"
             >
-                Pridať parameter
+                Add parameter
             </v-btn>
         </template>
         <v-card>
             <v-card-title>
-                <span class="text-h5">Nový parameter</span>
+                <span class="text-h5">New parameter</span>
             </v-card-title>
             <v-card-text>
                 <div class="d-block mb-4">
@@ -23,14 +23,14 @@
                 </div>
                 <v-text-field
                     v-model="name"
-                    label="Názov *"
+                    label="Name *"
                     :error-messages="nameErrorMessage"
                     required
                 ></v-text-field>
 
                 <v-text-field
                     v-model="coefficient"
-                    label="Koeficient (hodnota medzi 0 a 1) *"
+                    label="Coefficient (value between 0 and 1) *"
                     type="number"
                     step="0.1"
                     :error-messages="coefficientErrorMessage"

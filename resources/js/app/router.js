@@ -5,7 +5,6 @@ import Vue from 'vue'
 // views
 import MainPage from './views/app/MainPage.vue'
 import Login from './views/app/Login.vue'
-import AdminLogin from './views/admin/AdminLogin.vue'
 
 // users
 import UserDetail from './views/admin/UserDetail.vue'

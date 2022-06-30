@@ -6,8 +6,7 @@
         </div>
 
         <v-form
-            @submit.prevent="register"
-            lazy-validation>
+            @submit.prevent="register">
             <v-text-field
                 v-model="name"
                 label="Name *"
@@ -38,9 +37,13 @@
             <v-btn color="primary"
                    type="submit"
                    dark>
-                Registrovať sa
+                Register
             </v-btn>
         </v-form>
+        <div class="mt-4">
+            Already have an account? <a href="/login">Log In</a>
+        </div>
+
     </div>
 </template>
 
