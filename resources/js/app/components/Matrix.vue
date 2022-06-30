@@ -1,32 +1,36 @@
 <template>
-    <v-data-table
-        :headers="headers"
-        :items="rows"
-        :hide-default-footer="true"
-        class="elevation-1">
-        <template v-slot:item="{ item }">
-            <tr v-if="'isFooter' in item">
-                <td @click="onTableCellClick(item, header.value)"
-                    v-for="header in headers"
-                    v-bind:class="{'light-green': maxMatchId === header.value}"
-                >
-                    <div v-if="header.value === 'name'">{{ item.name }}</div>
-                    <div v-else-if="header.value === 'coefficient'">{{ item.coefficient }}</div>
-                    <div v-else>{{ item[header.value] }}</div>
-                </td>
-            </tr>
-            <tr v-else>
-                <td v-for="header in headers" @click="onTableCellClick(item, header.value)">
-                    <div v-if="header.value === 'name'">{{ item.name }}</div>
-                    <div v-else-if="header.value === 'coefficient'">{{ item.coefficient }}</div>
-                    <div v-else-if="item.companies.includes(header.value)">
-                        <v-icon>mdi-check</v-icon>
-                    </div>
-                    <div v-else></div>
-                </td>
-            </tr>
-        </template>
-    </v-data-table>
+    <div class="table-wrapper">
+        <v-data-table
+            :headers="headers"
+            :items="rows"
+            :hide-default-footer="true"
+            :mobile-breakpoint="0"
+            disable-sort
+            class="elevation-1">
+            <template v-slot:item="{ item }">
+                <tr v-if="'isFooter' in item">
+                    <td @click="onTableCellClick(item, header.value)"
+                        v-for="header in headers"
+                        v-bind:class="{'light-green': maxMatchId === header.value}"
+                    >
+                        <div v-if="header.value === 'name'">{{ item.name }}</div>
+                        <div v-else-if="header.value === 'coefficient'">{{ item.coefficient }}</div>
+                        <div v-else>{{ item[header.value] }}</div>
+                    </td>
+                </tr>
+                <tr v-else>
+                    <td v-for="header in headers" @click="onTableCellClick(item, header.value)">
+                        <div v-if="header.value === 'name'">{{ item.name }}</div>
+                        <div v-else-if="header.value === 'coefficient'">{{ item.coefficient }}</div>
+                        <div v-else-if="item.companies.includes(header.value)">
+                            <v-icon>mdi-check</v-icon>
+                        </div>
+                        <div v-else></div>
+                    </td>
+                </tr>
+            </template>
+        </v-data-table>
+    </div>
 </template>
 
 <script>

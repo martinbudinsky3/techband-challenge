@@ -2244,6 +2244,10 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -6963,76 +6967,89 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("v-data-table", {
-    staticClass: "elevation-1",
-    attrs: {
-      headers: _vm.headers,
-      items: _vm.rows,
-      "hide-default-footer": true,
-    },
-    scopedSlots: _vm._u([
-      {
-        key: "item",
-        fn: function (ref) {
-          var item = ref.item
-          return [
-            "isFooter" in item
-              ? _c(
-                  "tr",
-                  _vm._l(_vm.headers, function (header) {
-                    return _c(
-                      "td",
-                      {
-                        class: {
-                          "light-green": _vm.maxMatchId === header.value,
-                        },
-                        on: {
-                          click: function ($event) {
-                            return _vm.onTableCellClick(item, header.value)
-                          },
-                        },
-                      },
-                      [
-                        header.value === "name"
-                          ? _c("div", [_vm._v(_vm._s(item.name))])
-                          : header.value === "coefficient"
-                          ? _c("div", [_vm._v(_vm._s(item.coefficient))])
-                          : _c("div", [_vm._v(_vm._s(item[header.value]))]),
-                      ]
-                    )
-                  }),
-                  0
-                )
-              : _c(
-                  "tr",
-                  _vm._l(_vm.headers, function (header) {
-                    return _c(
-                      "td",
-                      {
-                        on: {
-                          click: function ($event) {
-                            return _vm.onTableCellClick(item, header.value)
-                          },
-                        },
-                      },
-                      [
-                        header.value === "name"
-                          ? _c("div", [_vm._v(_vm._s(item.name))])
-                          : header.value === "coefficient"
-                          ? _c("div", [_vm._v(_vm._s(item.coefficient))])
-                          : item.companies.includes(header.value)
-                          ? _c("div", [_c("v-icon", [_vm._v("mdi-check")])], 1)
-                          : _c("div"),
-                      ]
-                    )
-                  }),
-                  0
-                ),
-          ]
+  return _c(
+    "div",
+    { staticClass: "table-wrapper" },
+    [
+      _c("v-data-table", {
+        staticClass: "elevation-1",
+        attrs: {
+          headers: _vm.headers,
+          items: _vm.rows,
+          "hide-default-footer": true,
+          "mobile-breakpoint": 0,
+          "disable-sort": "",
         },
-      },
-    ]),
-  })
+        scopedSlots: _vm._u([
+          {
+            key: "item",
+            fn: function (ref) {
+              var item = ref.item
+              return [
+                "isFooter" in item
+                  ? _c(
+                      "tr",
+                      _vm._l(_vm.headers, function (header) {
+                        return _c(
+                          "td",
+                          {
+                            class: {
+                              "light-green": _vm.maxMatchId === header.value,
+                            },
+                            on: {
+                              click: function ($event) {
+                                return _vm.onTableCellClick(item, header.value)
+                              },
+                            },
+                          },
+                          [
+                            header.value === "name"
+                              ? _c("div", [_vm._v(_vm._s(item.name))])
+                              : header.value === "coefficient"
+                              ? _c("div", [_vm._v(_vm._s(item.coefficient))])
+                              : _c("div", [_vm._v(_vm._s(item[header.value]))]),
+                          ]
+                        )
+                      }),
+                      0
+                    )
+                  : _c(
+                      "tr",
+                      _vm._l(_vm.headers, function (header) {
+                        return _c(
+                          "td",
+                          {
+                            on: {
+                              click: function ($event) {
+                                return _vm.onTableCellClick(item, header.value)
+                              },
+                            },
+                          },
+                          [
+                            header.value === "name"
+                              ? _c("div", [_vm._v(_vm._s(item.name))])
+                              : header.value === "coefficient"
+                              ? _c("div", [_vm._v(_vm._s(item.coefficient))])
+                              : item.companies.includes(header.value)
+                              ? _c(
+                                  "div",
+                                  [_c("v-icon", [_vm._v("mdi-check")])],
+                                  1
+                                )
+                              : _c("div"),
+                          ]
+                        )
+                      }),
+                      0
+                    ),
+              ]
+            },
+          },
+        ]),
+      }),
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
