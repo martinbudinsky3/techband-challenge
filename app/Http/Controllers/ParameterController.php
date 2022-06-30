@@ -28,11 +28,15 @@ class ParameterController extends Controller
 
     public function storeCompanyRelation(Parameter $parameter, Company $company)
     {
+        $this->authorize('create', [$parameter, $company]);
+
         $parameter->companies()->attach($company->id);
     }
 
     public function deleteCompanyRelation(Parameter $parameter, Company $company)
     {
+        $this->authorize('delete', [$parameter, $company]);
+
         $parameter->companies()->detach($company->id);
     }
 }
